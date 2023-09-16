@@ -1,19 +1,28 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { menuItems } from "../../constants/links"
-import { FooterStyles, FooterMenuStyles, CopyrightStyles } from "./FooterStyles"
-import useAllProduct from "../../hooks/use-all-product"
-import { UseSiteMetadata } from "../../hooks/useSiteMetadata"
+/** @format */
+
+// Footer.js
+
+import * as React from "react";
+import { Link } from "gatsby";
+import { menuItems } from "../../constants/links";
+import {
+  FooterStyles,
+  FooterMenuStyles,
+  CopyrightStyles,
+} from "./FooterStyles";
+import useAllProduct from "../../hooks/use-all-product";
+import { UseSiteMetadata } from "../../hooks/useSiteMetadata";
 import {
   FaFacebookSquare as Facebook,
   FaTwitterSquare as Twitter,
   FaInstagram as Instagram,
   FaLinkedin as Linkedin,
-} from "react-icons/fa"
+} from "react-icons/fa";
 
 const Footer = () => {
-  const allProduct = useAllProduct()
-  const siteMeta = UseSiteMetadata()
+  const allProduct = useAllProduct();
+  const siteMeta = UseSiteMetadata();
+
   return (
     <FooterStyles style={{ marginBottom: 0 }} className="section">
       <div className="container container__tight">
@@ -23,12 +32,16 @@ const Footer = () => {
             {menuItems.map((item, index) => {
               return (
                 <li key={index}>
-                  <Link to={item.path} activeClassName="menu__item--active">
+                  <Link
+                    to={item.path}
+                    activeClassName="menu__item--active"
+                    className={item.text === "Služby" ? "sluzby-link" : ""}
+                  >
                     {item.text}
                     <span>.</span>
                   </Link>
                 </li>
-              )
+              );
             })}
           </ul>
         </FooterMenuStyles>
@@ -41,7 +54,7 @@ const Footer = () => {
             </h5>
             <ul>
               {allProduct.map((item, index) => {
-                const { gatsbyPath, title } = item
+                const { gatsbyPath, title } = item;
 
                 return (
                   <li key={index}>
@@ -50,7 +63,7 @@ const Footer = () => {
                       <span>.</span>
                     </Link>
                   </li>
-                )
+                );
               })}
             </ul>
           </FooterMenuStyles>
@@ -128,7 +141,7 @@ const Footer = () => {
         </div>
       </CopyrightStyles>
     </FooterStyles>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

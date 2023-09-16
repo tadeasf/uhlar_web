@@ -1,4 +1,8 @@
-import styled from "styled-components"
+/** @format */
+
+// FooterStyles.js
+
+import styled from "styled-components";
 
 export const FooterStyles = styled.footer`
   &.section {
@@ -30,7 +34,29 @@ export const FooterStyles = styled.footer`
       }
     }
   }
-`
+  .sluzby-link {
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    a {
+      color: var(--bodyColor);
+      text-decoration: none;
+      text-transform: capitalize;
+      font-weight: 700;
+
+      span {
+        color: var(--primary);
+      }
+    }
+
+    &:hover,
+    &:focus {
+      a {
+        color: var(--primary);
+      }
+    }
+  }
+`;
 
 export const FooterMenuStyles = styled.div`
   @media (min-width: 768px) {
@@ -64,7 +90,7 @@ export const FooterMenuStyles = styled.div`
     a {
       color: var(--bodyColor);
       text-decoration: none;
-      text-transform: capitalize;
+      text-transform: none;
       font-weight: 700;
 
       span {
@@ -112,7 +138,7 @@ export const FooterMenuStyles = styled.div`
       }
     }
   }
-`
+`;
 
 export const CopyrightStyles = styled.div`
   font-size: 13px;
@@ -136,4 +162,4 @@ export const CopyrightStyles = styled.div`
       color: var(--primary);
     }
   }
-`
+`;

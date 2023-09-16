@@ -1,5 +1,7 @@
-import styled from "styled-components"
-import { motion } from "framer-motion"
+/** @format */
+
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const NavModuleStyles = styled.nav`
   .nav {
@@ -40,7 +42,7 @@ export const NavModuleStyles = styled.nav`
     display: flex;
     align-items: center;
   }
-`
+`;
 
 export const NavTopLevel = styled.ul`
   list-style: none;
@@ -49,7 +51,7 @@ export const NavTopLevel = styled.ul`
 
   > li,
   > li > button {
-    text-transform: capitalize;
+    text-transform: none;
     font-size: var(--h2);
     font-weight: 700;
     cursor: pointer;
@@ -104,7 +106,7 @@ export const NavTopLevel = styled.ul`
       font-size: 30px;
     }
   }
-`
+`;
 
 export const SubNavStyles = styled(motion.ul)`
   padding-left: calc(var(--gap) / 2);
@@ -130,7 +132,7 @@ export const SubNavStyles = styled(motion.ul)`
     margin-top: 10px;
     margin-bottom: 10px;
   }
-`
+`;
 
 export const HamburgerStyles = styled(motion.button)`
   background-color: transparent;
@@ -157,7 +159,7 @@ export const HamburgerStyles = styled(motion.button)`
       margin-bottom: 8px;
     }
   }
-`
+`;
 
 export const LogoStyles = styled.div`
   font-weight: 700;
@@ -184,4 +186,4 @@ export const LogoStyles = styled.div`
       color: var(--primary);
     }
   }
-`
+`;

@@ -9,6 +9,10 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
+console.log(
+  process.env.CONTENTFUL_SPACE_ID,
+  process.env.CONTENTFUL_ACCESS_TOKEN
+);
 module.exports = {
   siteMetadata: {
     title: "Martin Uhlář",
@@ -30,9 +34,9 @@ module.exports = {
     {
       resolve: `gatsby-source-contentful`,
       options: {
-        spaceId: "qzxt9xus3u3o",
+        spaceId: process.env.CONTENTFUL_SPACE_ID,
         // Learn about environment variables: https://gatsby.dev/env-vars
-        accessToken: "6MyOcWZhki2zcqcbr3GMIAuSa_49ndUxGr63UirbpHc",
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
     {

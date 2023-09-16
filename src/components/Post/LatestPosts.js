@@ -30,7 +30,11 @@ const LatestPosts = ({ title, introduction }) => {
           })}
         </PostItems>
         <div className="learn__more">
-          <Button text="Všechny články" as={Link} to="/aktuality" />
+          <Button
+            text="Všechny aktuality a postřehy"
+            as={Link}
+            to="/aktuality"
+          />
         </div>
       </div>
     </div>
