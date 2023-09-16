@@ -1,4 +1,6 @@
-import { graphql, useStaticQuery } from "gatsby"
+/** @format */
+
+import { graphql, useStaticQuery } from "gatsby";
 
 const useAllProduct = () => {
   const {
@@ -11,7 +13,9 @@ const useAllProduct = () => {
           gatsbyPath(filePath: "/products/{contentfulProduct.sku}")
           introduction
           sku
-          price
+          ... on ContentfulProduct {
+            price
+          }
           description {
             raw
           }
@@ -25,9 +29,9 @@ const useAllProduct = () => {
         }
       }
     }
-  `)
+  `);
 
-  return nodes
-}
+  return nodes;
+};
 
-export default useAllProduct
+export default useAllProduct;
