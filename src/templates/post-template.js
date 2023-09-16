@@ -19,13 +19,13 @@ const PostTemplate = (contentfulPost) => {
             <article className="blogsingle__content">
               <RichText richText={content} />
               <div className="blogsingle__back">
-                <Button to="/news" text="Back to news" as={Link} />
+                <Button to="/aktuality" text="Zpět na články" as={Link} />
               </div>
             </article>
           )}
         </PostSingleStyles>
       </section>
-      <LatestPosts title="Further reading from Barcadia" />
+      <LatestPosts title="Mohlo by Vás zajímat" />
     </>
   )
 }

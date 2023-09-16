@@ -8,7 +8,7 @@ import LatestPosts from "../components/Post/LatestPosts"
 const Index = () => {
   return (
     <>
-      <Seo title="Home" />
+      <Seo title="Domovská stránka" />
       <Layout>
         <BannerModule title="Vítejte" subTitle="Rád čuchám starý papír." />
         <Features

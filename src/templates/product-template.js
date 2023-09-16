@@ -126,7 +126,7 @@ const Producttemplate = (contentfulProduct) => {
         </ProductGallery>
       )}
       <Features
-        title="Featured Products from Barcadia."
+        title="Další moje projekty."
         introduction="Vivamus quam mauris, pulvinar vel mauris id, interdum semper neque. Proin malesuada libero eget tellus scelerisque, id egestas tortor egestas."
       />
     </>
