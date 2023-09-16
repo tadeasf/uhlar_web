@@ -14,7 +14,6 @@ const useAllProduct = () => {
           introduction
           sku
           ... on ContentfulProduct {
-            price
           }
           description {
             raw

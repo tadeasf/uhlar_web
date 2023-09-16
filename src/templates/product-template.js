@@ -71,7 +71,6 @@ const Producttemplate = (contentfulProduct) => {
   const {
     headerImage,
     title,
-    price,
     introduction,
     description,
     faqs,
@@ -83,7 +82,6 @@ const Producttemplate = (contentfulProduct) => {
       <Seo title={title} />
       <BannerModule
         title={title}
-        price={price}
         subTitle={introduction}
         enquire={true}
       >
