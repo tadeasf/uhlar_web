@@ -13,8 +13,6 @@ const useAllProduct = () => {
           gatsbyPath(filePath: "/products/{contentfulProduct.sku}")
           introduction
           sku
-          ... on ContentfulProduct {
-          }
           description {
             raw
           }
