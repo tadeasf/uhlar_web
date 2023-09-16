@@ -2,10 +2,13 @@
  * Configure your Gatsby site with this file.
  *
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
+ *
+ * @format
  */
+
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
-})
+});
 module.exports = {
   siteMetadata: {
     title: "Martin Uhlář",
@@ -27,9 +30,9 @@ module.exports = {
     {
       resolve: `gatsby-source-contentful`,
       options: {
-        spaceId: process.env.CONTENTFUL_SPACE_ID,
+        spaceId: "qzxt9xus3u3o",
         // Learn about environment variables: https://gatsby.dev/env-vars
-        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+        accessToken: "6MyOcWZhki2zcqcbr3GMIAuSa_49ndUxGr63UirbpHc",
       },
     },
     {
@@ -45,4 +48,4 @@ module.exports = {
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
   ],
-}
+};

@@ -1,12 +1,16 @@
-import * as React from "react"
-import { Link, navigate } from "gatsby"
-import { BannerModuleStyles } from "./BannerModuleStyles"
-import { StaticImage } from "gatsby-plugin-image"
-import Button from "../Button/Button"
+/** @format */
+
+import * as React from "react";
+import { Link, navigate } from "gatsby";
+import { BannerModuleStyles } from "./BannerModuleStyles";
+import { StaticImage } from "gatsby-plugin-image";
+import Button from "../Button/Button";
 
 const BannerModule = ({ children, title, subTitle, price, enquire }) => {
+  // disable warning for scrollIntoView
+  // eslint-disable-next-line
   function scrollToArea() {
-    navigate("#topContent")
+    navigate("#topContent");
   }
 
   return (
@@ -56,7 +60,7 @@ const BannerModule = ({ children, title, subTitle, price, enquire }) => {
       </BannerModuleStyles>
       <span id="topContent"></span>
     </>
-  )
-}
+  );
+};
 
-export default BannerModule
+export default BannerModule;
