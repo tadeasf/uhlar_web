@@ -18,7 +18,7 @@ const BannerModule = ({ children, title, subTitle, price, enquire }) => {
           <StaticImage
             className="banner__image"
             imgClassName="banner__image--content"
-            src="../../../static/macbook-color.jpg"
+            src="../../../static/header-uhlar.jpg"
             alt="Banner Image"
             layout="fullWidth"
             placeholder="blurred"
@@ -44,12 +44,12 @@ const BannerModule = ({ children, title, subTitle, price, enquire }) => {
               {enquire && (
                 <Button
                   className="btn"
-                  text="Enquire Now"
+                  text="Kontaktujte mne"
                   as={Link}
                   to="/contact"
                 />
               )}
-              <Button onClick={scrollToArea} text="Learn More" />
+              <Button onClick={scrollToArea} text="Zjisti Víc" />
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ const Footer = () => {
     <FooterStyles style={{ marginBottom: 0 }} className="section">
       <div className="container container__tight">
         <FooterMenuStyles className="footer__menu">
-          <h5>Links</h5>
+          <h5>Odkazy</h5>
           <ul>
             {menuItems.map((item, index) => {
               return (
@@ -35,8 +35,8 @@ const Footer = () => {
         {allProduct.length > 0 && (
           <FooterMenuStyles className="footer__menu products__menu">
             <h5>
-              <Link to="/products">
-                All Products<span>.</span>
+              <Link to="/projekty">
+                Všechny projekty<span>.</span>
               </Link>
             </h5>
             <ul>
@@ -61,9 +61,6 @@ const Footer = () => {
         siteMeta.instagramUsername ||
         siteMeta.linkedinUsername ? (
           <FooterMenuStyles className="footer__menu social__menu">
-            <h5>
-              Follow Barcadia<span>.</span>
-            </h5>
             <ul>
               {siteMeta.twitterUsername && (
                 <li>
@@ -118,7 +115,7 @@ const Footer = () => {
       <CopyrightStyles>
         <div className="container container__tight">
           <p>
-            Designed & developed by{" "}
+            Developed by{" "}
             <a
               href={siteMeta.developerUrl}
               target="_blank"

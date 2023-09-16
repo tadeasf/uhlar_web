@@ -1,18 +1,18 @@
 export const menuItems = [
   {
     path: "/",
-    text: "home",
+    text: "domů",
   },
   {
-    path: "/products",
-    text: "products",
+    path: "/projekty",
+    text: "projekty",
   },
   {
-    path: "/blogs",
-    text: "blog",
+    path: "/aktuality",
+    text: "novinky",
   },
   {
     path: "/contact",
-    text: "contact",
+    text: "kontakt",
   },
 ]
