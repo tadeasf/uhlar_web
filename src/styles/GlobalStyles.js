@@ -1,4 +1,6 @@
-import { createGlobalStyle } from "styled-components"
+/** @format */
+
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -8,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   --menuWidth: 100vw;
   --blockquote: 20px;
   --background: #1b1b1b;
-  --primary: #A0522D;
+  --primary: #DEA843;
   --bodyColor: #afc2cb;
   --inActive: #555;
   --letterSpacing: -0.075rem;
@@ -282,4 +284,4 @@ blockquote {
   text-align: center;
   margin-top: calc(var(--gap) / 2);
 }
-`
+`;
