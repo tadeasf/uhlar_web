@@ -1,20 +1,20 @@
-import React from "react"
-import { Link } from "gatsby"
-import Button from "../components/Button/Button"
-import { PostSingleStyles } from "../components/Post/PostStyles"
-import LatestPosts from "../components/Post/LatestPosts"
-import RichText from "../components/RichText"
+/** @format */
+
+import React from "react";
+import { Link } from "gatsby";
+import Button from "../components/Button/Button";
+import { PostSingleStyles } from "../components/Post/PostStyles";
+import LatestPosts from "../components/Post/LatestPosts";
+import RichText from "../components/RichText";
 
 const PostTemplate = (contentfulPost) => {
-  const { title, createdAt, content } = contentfulPost
+  const { title, createdAt, content } = contentfulPost;
   return (
     <>
       <section>
         <PostSingleStyles>
           {title && <h1 className="blogsingle__title">{title}</h1>}
-          {createdAt && (
-            <p className="blogsingle__date">Posted on {createdAt}</p>
-          )}
+          {createdAt && <p className="blogsingle__date">Sdíleno {createdAt}</p>}
           {content && (
             <article className="blogsingle__content">
               <RichText richText={content} />
@@ -27,7 +27,7 @@ const PostTemplate = (contentfulPost) => {
       </section>
       <LatestPosts title="Mohlo by Vás zajímat" />
     </>
-  )
-}
+  );
+};
 
-export default PostTemplate
+export default PostTemplate;
