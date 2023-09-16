@@ -48,8 +48,7 @@ const BannerModule = ({ children, title, subTitle, price, enquire }) => {
                   as={Link}
                   to="/contact"
                 />
-              )}
-              <Button onClick={scrollToArea} text="Zjisti Víc" />
+              )}{" "}
             </div>
           </div>
         </div>
