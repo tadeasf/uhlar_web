@@ -1,12 +1,14 @@
-import React from "react"
-import { Link } from "gatsby"
-import PostItems from "./PostItems"
-import PostItem from "./PostItem"
-import useLatestBlogPost from "../../hooks/use-latest-blog-post"
-import Button from "../Button/Button"
+/** @format */
+
+import React from "react";
+import { Link } from "gatsby";
+import PostItems from "./PostItems";
+import PostItem from "./PostItem";
+import useLatestBlogPost from "../../hooks/use-latest-blog-post";
+import Button from "../Button/Button";
 
 const LatestPosts = ({ title, introduction }) => {
-  const latestBlogPost = useLatestBlogPost()
+  const latestBlogPost = useLatestBlogPost();
   return (
     <div className="section">
       <div className="container container__tight">
@@ -24,15 +26,15 @@ const LatestPosts = ({ title, introduction }) => {
 
         <PostItems>
           {latestBlogPost.map((node, index) => {
-            return <PostItem key={index} node={node} />
+            return <PostItem key={index} node={node} />;
           })}
         </PostItems>
         <div className="learn__more">
-          <Button text="Všechny články" as={Link} to="/news" />
+          <Button text="Všechny články" as={Link} to="/aktuality" />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LatestPosts
+export default LatestPosts;
