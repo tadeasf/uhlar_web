@@ -6,6 +6,10 @@ export const menuItems = [
     text: "Domovská stránka",
   },
   {
+    path: "/o-mne",
+    text: "O mně",
+  },
+  {
     path: "/projekty",
     text: "Projekty",
   },
