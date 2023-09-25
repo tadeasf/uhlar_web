@@ -28,6 +28,7 @@ module.exports = {
   /* Your site config here */
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-netlify`,
     `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-source-contentful`,
