@@ -1,9 +1,11 @@
-import styled from "styled-components"
+/** @format */
+
+import styled from "styled-components";
 
 export const SimpleBannerStyles = styled.section`
-  height: 70vh;
+  height: 100vh;
   position: relative;
-  padding: var(--gap) var(--borderSpacing);
+  padding: 30px var(--borderSpacing);
 
   .container {
     height: 100%;
@@ -47,4 +49,4 @@ export const SimpleBannerStyles = styled.section`
       text-shadow: var(--textShadow);
     }
   }
-`
+`;

@@ -1,4 +1,6 @@
-import styled from "styled-components"
+/** @format */
+
+import styled from "styled-components";
 
 export const ButtonStyles = styled.button`
   color: #fff;
@@ -8,7 +10,7 @@ export const ButtonStyles = styled.button`
   text-decoration: none;
   padding: 0;
   transition: color 0.3s ease;
-  text-transform: capitalize;
+  text-transform: none;
   font-size: var(--p);
   font-weight: 700;
   position: relative;
@@ -43,4 +45,4 @@ export const ButtonStyles = styled.button`
       }
     }
   }
-`
+`;

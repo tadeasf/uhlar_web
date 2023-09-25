@@ -14,8 +14,6 @@ import useAllProduct from "../../hooks/use-all-product";
 import { UseSiteMetadata } from "../../hooks/useSiteMetadata";
 import {
   FaFacebookSquare as Facebook,
-  FaTwitterSquare as Twitter,
-  FaInstagram as Instagram,
   FaLinkedin as Linkedin,
 } from "react-icons/fa";
 
@@ -69,23 +67,9 @@ const Footer = () => {
           </FooterMenuStyles>
         )}
 
-        {siteMeta.twitterUsername ||
-        siteMeta.facebookUsername ||
-        siteMeta.instagramUsername ||
-        siteMeta.linkedinUsername ? (
+        {siteMeta.facebookUsername || siteMeta.linkedinUsername ? (
           <FooterMenuStyles className="footer__menu social__menu">
             <ul>
-              {siteMeta.twitterUsername && (
-                <li>
-                  <a
-                    href={`https://www.twitter.com/${siteMeta.twitterUsername}`}
-                    target="_blank"
-                    rel="nofollow noreferrer noopener"
-                  >
-                    <Twitter />
-                  </a>
-                </li>
-              )}
               {siteMeta.facebookUsername && (
                 <li>
                   <a
@@ -94,17 +78,6 @@ const Footer = () => {
                     rel="nofollow noreferrer noopener"
                   >
                     <Facebook />
-                  </a>
-                </li>
-              )}
-              {siteMeta.instagramUsername && (
-                <li>
-                  <a
-                    href={`https://www.instagram.com/${siteMeta.instagramUsername}`}
-                    target="_blank"
-                    rel="nofollow noreferrer noopener"
-                  >
-                    <Instagram />
                   </a>
                 </li>
               )}

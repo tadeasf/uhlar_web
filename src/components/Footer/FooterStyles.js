@@ -41,7 +41,7 @@ export const FooterStyles = styled.footer`
     a {
       color: var(--bodyColor);
       text-decoration: none;
-      text-transform: capitalize;
+      text-transform: none;
       font-weight: 700;
 
       span {

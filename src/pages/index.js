@@ -16,14 +16,8 @@ const Index = () => {
           title="Genealogické služby"
           subTitle="Místo, kde společně poznáváme rodovou historii."
         />
-        <Features
-          title="Nejnovější projekty"
-          introduction="Vivamus quam mauris, pulvinar vel mauris id, interdum semper neque. Proin malesuada libero eget tellus scelerisque, id egestas tortor egestas."
-        />
-        <LatestPosts
-          title="Aktuality a postřehy z pera pana bývalého vrchního ministerského rady"
-          introduction="Cras scelerisque, tellus sed gravida tincidunt, velit tellus blandit justo, nec viverra augue erat in erat. Maecenas iaculis sed purus non fringilla."
-        />
+        <Features title="Nejnovější projekty" />
+        <LatestPosts title="Aktuality a postřehy" />
       </Layout>
     </>
   );
