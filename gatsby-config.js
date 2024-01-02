@@ -46,6 +46,14 @@ module.exports = {
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "G-YB6RXJLY94", // Replace with your Google Analytics tracking ID
+        // Optional fields, see https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/
+        head: true, // Defines where to place the tracking script - `true` in the head and `false` in the body
+      },
+    },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-styled-components`,
