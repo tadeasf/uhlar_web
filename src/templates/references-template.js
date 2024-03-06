@@ -19,13 +19,13 @@ const ReferencesTemplate = (contentfulReference) => {
             <article className="blogsingle__content">
               <RichText richText={content} />
               <div className="blogsingle__back">
-                <Button to="/references" text="Back to References" as={Link} />
+                <Button to="/reference" text="Zpět na reference" as={Link} />
               </div>
             </article>
           )}
         </PostSingleStyles>
       </section>
-      <LatestPosts title="You Might Also Like" />
+      <LatestPosts title="Aktuality" />
     </>
   );
 };
