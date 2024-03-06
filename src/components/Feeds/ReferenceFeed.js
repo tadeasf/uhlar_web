@@ -1,14 +1,12 @@
-/** @format */
-
 import React from "react";
-import PostItem from "../Post/PostItem";
-import useAllReference from "../../hooks/use-all-references"; // Update the hook to fetch references
+import ReferenceItem from "../Post/ReferenceItem";
+import useAllReference from "../../hooks/use-all-references";
 
 const ReferenceFeed = () => {
-  const allReference = useAllReference(); // Update the variable name
+  const allReference = useAllReference();
 
   return allReference.map((node, index) => {
-    return <PostItem key={index} node={node} />;
+    return <ReferenceItem key={index} node={node} />;
   });
 };
 

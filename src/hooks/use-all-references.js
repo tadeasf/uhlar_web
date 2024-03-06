@@ -9,10 +9,9 @@ const useAllReferences = () => {
         edges {
           node {
             title
+            gatsbyPath(filePath: "/references/{contentfulReferences.url}")
             createdAt
-            content {
-              raw
-            }
+            introduction
           }
         }
       }
@@ -23,5 +22,4 @@ const useAllReferences = () => {
     ...edge.node,
   }));
 };
-
 export default useAllReferences;
