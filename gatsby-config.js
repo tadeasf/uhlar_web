@@ -34,7 +34,6 @@ module.exports = {
       resolve: `gatsby-source-contentful`,
       options: {
         spaceId: process.env.CONTENTFUL_SPACE_ID,
-        // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
     },
@@ -50,8 +49,17 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: "G-YB6RXJLY94", // Replace with your Google Analytics tracking ID
-        // Optional fields, see https://www.gatsbyjs.com/plugins/gatsby-plugin-google-analytics/
         head: true, // Defines where to place the tracking script - `true` in the head and `false` in the body
+      },
+    },
+    {
+      resolve: `gatsby-plugin-umami`,
+      options: {
+        websiteId: "cd59598f-1c85-4f57-9b12-f47f7d769589",
+        srcUrl: "https://analytics.zizcon.cz/script.js",
+        includeInDevelopment: false,
+        autoTrack: true,
+        respectDoNotTrack: true,
       },
     },
     `gatsby-transformer-sharp`,
