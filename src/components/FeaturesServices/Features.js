@@ -4,7 +4,7 @@ import * as React from "react";
 import { Link } from "gatsby";
 import { FeaturedServicesStyles } from "./FeaturesStyles";
 import FeaturedService from "./FeaturedService";
-import useFeaturedService from "../../hooks/use-featured-product";
+import useFeaturedService from "../../hooks/use-featured-service";
 import Button from "../Button/Button";
 
 const Features = ({ title, introduction }) => {
@@ -27,10 +27,10 @@ const Features = ({ title, introduction }) => {
         })}
       </div>
       <div className="container container__tight learn__more">
-        <Button as={Link} to="/projekty" text="Všechny projekty" />
+        <Button as={Link} to="/sluzby" text="Všechny služby" />
       </div>
     </FeaturedServicesStyles>
   );
 };
 
-export default FeaturesForService;
+export default Features;

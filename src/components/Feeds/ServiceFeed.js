@@ -1,14 +1,14 @@
 /** @format */
 
 import React from "react";
-import FeaturedProduct from "../Features/FeaturedProduct";
-import useAllService from "../../hooks/use-all-service"; // Update the hook to fetch services
+import FeaturedService from "../FeaturesServices/FeaturedService";
+import useAllService from "../../hooks/use-all-service";
 
 const ServiceFeed = () => {
-  const allService = useAllService(); // Update the variable name
+  const allService = useAllService();
 
   return allService.map((node, index) => {
-    return <FeaturedProduct key={index} feature={node} />;
+    return <FeaturedService key={index} feature={node} />;
   });
 };
 

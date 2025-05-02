@@ -6,7 +6,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import styled from "styled-components";
 import BannerModule from "../components/BannerModule/BannerModule";
 import Faq from "../components/Faq/Faq";
-import Features from "../components/Features/Features";
+import Features from "../components/FeaturesServices/Features";
 import RichText from "../components/RichText";
 
 const ServiceTemplateStyles = styled.div`
@@ -127,8 +127,8 @@ const ServiceTemplate = (contentfulService) => {
         </ProductGallery>
       )}
       <Features
-        title="Other Projects."
-        introduction="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada libero eget tellus scelerisque, id egestas tortor egestas."
+        title="Další služby"
+        introduction="Podívejte se na další služby, které nabízím."
       />
     </>
   );

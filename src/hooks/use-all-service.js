@@ -9,6 +9,7 @@ const useAllService = () => {
         edges {
           node {
             title
+            sku
             createdAt
             headerImage {
               gatsbyImageData
@@ -27,6 +28,7 @@ const useAllService = () => {
             gallery {
               gatsbyImageData
             }
+            gatsbyPath(filePath: "/services/{contentfulService.sku}")
           }
         }
       }
