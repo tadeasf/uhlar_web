@@ -15,7 +15,6 @@ const useFeaturedService = () => {
           title
           sku
           gatsbyPath(filePath: "/services/{contentfulService.sku}")
-          introduction
           headerImage {
             gatsbyImageData(
               width: 1000

@@ -5,7 +5,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { FeaturedServiceStyles } from "./FeaturesStyles"
 
 const FeaturedService = ({ feature }) => {
-  const { gatsbyPath, headerImage, title, introduction } = feature
+  const { gatsbyPath, headerImage, title } = feature
   const image = getImage(headerImage)
 
   return (
@@ -16,10 +16,9 @@ const FeaturedService = ({ feature }) => {
           image={image}
           alt="Service Image"
         />
-        {title && introduction && (
+        {title && (
           <div className="features__item--content">
             {title && <h4>{title}</h4>}
-            {introduction && <p>{introduction}</p>}
             <Button text="Čti víc" as="span" arrow={true} />
           </div>
         )}

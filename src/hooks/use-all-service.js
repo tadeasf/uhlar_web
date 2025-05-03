@@ -10,23 +10,11 @@ const useAllService = () => {
           node {
             title
             sku
-            createdAt
             headerImage {
               gatsbyImageData
             }
-            price
-            introduction
             description {
               raw
-            }
-            faqs {
-              question
-              answer {
-                raw
-              }
-            }
-            gallery {
-              gatsbyImageData
             }
             gatsbyPath(filePath: "/services/{contentfulService.sku}")
           }

@@ -72,11 +72,7 @@ const ServiceTemplate = (contentfulService) => {
   const {
     headerImage,
     title,
-    price,
-    introduction,
     description,
-    faqs,
-    gallery,
   } = contentfulService;
   const serviceHeaderImage = getImage(headerImage);
   return (
@@ -84,8 +80,6 @@ const ServiceTemplate = (contentfulService) => {
       <Seo title={title} />
       <BannerModule
         title={title}
-        price={price}
-        subTitle={introduction}
         enquire={true}
       >
         <GatsbyImage
@@ -101,31 +95,8 @@ const ServiceTemplate = (contentfulService) => {
               <RichText richText={description} />
             </div>
           )}
-          {faqs && (
-            <div className="column">
-              {faqs.map((item, index) => {
-                return (
-                  <Faq
-                    key={index}
-                    title={item.question}
-                    description={item.answer}
-                  />
-                );
-              })}
-            </div>
-          )}
         </div>
       </ServiceTemplateStyles>
-      {gallery && (
-        <ProductGallery className="section">
-          <div className="container container__tight">
-            {gallery.map((item, index) => {
-              let galleyImage = getImage(item);
-              return <GatsbyImage key={index} image={galleyImage} />;
-            })}
-          </div>
-        </ProductGallery>
-      )}
       <Features
         title="Další služby"
         introduction="Podívejte se na další služby, které nabízím."
