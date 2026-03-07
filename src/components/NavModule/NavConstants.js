@@ -2,7 +2,7 @@
 
 export const menuItems = [
   {
-    path: "/",
+    path: "/domov",
     text: "Domovská stránka",
   },
   {

@@ -16,7 +16,7 @@ const error = () => {
             <h1>Omlouvám se.</h1>
             <h3>Tato stránka neexistuje.</h3>
             <p>Prosím, využij menu nebo tlačítko Domů.</p>
-            <Button text="E.T. Volá Domů!" to="/" as={Link} />
+            <Button text="E.T. Volá Domů!" to="/domov" as={Link} />
           </div>
         </div>
       </Layout>
