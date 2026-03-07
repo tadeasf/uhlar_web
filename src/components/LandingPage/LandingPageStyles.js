@@ -12,7 +12,7 @@ export const LandingPageWrapper = styled.div`
   background-image: url("/logos/MartinLogo_Transparent_Green.png");
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: 85% auto;
+  background-size: 160% auto;
   padding: 24px 16px;
   position: relative;
   overflow-y: auto;
