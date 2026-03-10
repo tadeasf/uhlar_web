@@ -10,7 +10,20 @@ export const PostItemsStyles = styled.section`
 `
 
 export const PostItemStyles = styled(Link)`
+  /* Flex item — šířka definována zde, ne v rodiči */
   flex: 0 0 100%;
+  max-width: 100%;
+
+  @media(min-width: 600px) {
+    flex: 0 0 calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+
+  @media(min-width: 1024px) {
+    flex: 0 0 calc(33.333% - 14px);
+    max-width: calc(33.333% - 14px);
+  }
+
   border: 1px solid rgba(191,161,69,0.18);
   padding: 28px 24px;
   display: flex;
@@ -20,21 +33,20 @@ export const PostItemStyles = styled(Link)`
   transition: border-color 0.4s ease, background 0.4s ease, transform 0.3s ease;
   position: relative;
   background: rgba(255,255,255,0.015);
+  box-sizing: border-box;
 
+  /* rohové ozdoby */
   &::before, &::after {
     content: '';
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 14px; height: 14px;
     opacity: 0;
     transition: opacity 0.4s ease;
   }
-  &::before { top: 6px; left: 6px; border-top: 1px solid var(--primary); border-left: 1px solid var(--primary); }
-  &::after { bottom: 6px; right: 6px; border-bottom: 1px solid var(--primary); border-right: 1px solid var(--primary); }
+  &::before { top: 5px; left: 5px; border-top: 1px solid var(--primary); border-left: 1px solid var(--primary); }
+  &::after  { bottom: 5px; right: 5px; border-bottom: 1px solid var(--primary); border-right: 1px solid var(--primary); }
 
-  @media(min-width:768px) { flex-basis: calc(50% - 10px); }
-  @media(min-width:1024px) { flex-basis: calc(33.333% - 14px); padding: 36px 28px; }
-  @media(min-width:1200px) { flex-basis: calc(33.333% - 27px); padding: 44px 32px; }
+  @media(min-width:1024px) { padding: 36px 28px; }
 
   h4 {
     font-family: 'Cinzel', serif;
@@ -45,21 +57,21 @@ export const PostItemStyles = styled(Link)`
     margin-bottom: 0.75rem;
   }
 
-  p {
+  > p {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: calc(var(--p) * 1.05);
     color: var(--bodyColor);
-    margin-bottom: auto;
     flex: 1;
+    margin-bottom: 0;
   }
 
   .blogitem__meta {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    margin-top: 1.5rem;
+    gap: 10px;
+    margin-top: 1.2rem;
     padding-top: 1rem;
     border-top: 1px solid rgba(191,161,69,0.15);
 
@@ -72,7 +84,6 @@ export const PostItemStyles = styled(Link)`
       text-transform: uppercase;
       color: var(--primary);
       margin: 0;
-      flex: none;
     }
   }
 
