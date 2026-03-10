@@ -51,6 +51,13 @@ const cards = [
     href: "/domov",
     external: false,
   },
+  {
+    icon: "/icons/5.svg",
+    label: "Chci kreslit.",
+    subtitle: "Vývod z předků.",
+    href: "https://platno.martinuhlar.cz",
+    external: true,
+  },
 ]
 
 const LandingPage = () => {

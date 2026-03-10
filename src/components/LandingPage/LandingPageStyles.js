@@ -85,14 +85,14 @@ export const CardsRow = styled.div`
   z-index: 1;
 
   @media(min-width:600px) {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    max-width: 800px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    max-width: 960px;
   }
 
   @media(min-width:1024px) {
-    gap: 40px;
-    max-width: 1000px;
+    gap: 32px;
+    max-width: 1160px;
   }
 `
 
