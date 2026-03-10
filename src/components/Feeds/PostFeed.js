@@ -2,12 +2,15 @@ import React from "react"
 import PostItem from "../Post/PostItem"
 import useAllPost from "../../hooks/use-all-blog-post"
 
-const ProductFeed = () => {
+const PostFeed = () => {
   const allPost = useAllPost()
-
-  return allPost.map((node, index) => {
-    return <PostItem key={index} node={node} />
-  })
+  return (
+    <>
+      {allPost.map((node, index) => (
+        <PostItem key={index} node={node} />
+      ))}
+    </>
+  )
 }
 
-export default ProductFeed
+export default PostFeed
