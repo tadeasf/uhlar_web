@@ -8,6 +8,27 @@ import PostFeed from "../components/Feeds/PostFeed";
 import ReferenceFeed from "../components/Feeds/ReferenceFeed";
 import ServiceFeed from "../components/Feeds/ServiceFeed";
 import { PageTitleStyles } from "../components/PageTitle/PageTitleStyles";
+import styled from "styled-components";
+
+const FeedGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 0 var(--borderSpacing);
+  margin: var(--sectionMargin) auto;
+  max-width: 1400px;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media(min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media(min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
+  }
+`;
 
 const getTemplate = (contentfulPage) => {
   const { feedType } = contentfulPage;
@@ -27,9 +48,9 @@ const FeedTemplate = (contentfulPage) => {
         <PageTitleStyles>
           <h1>{contentfulPage.title}<span>.</span></h1>
         </PageTitleStyles>
-        <div className="section">
-          <div className="feed">{getTemplate(contentfulPage)}</div>
-        </div>
+        <FeedGrid>
+          {getTemplate(contentfulPage)}
+        </FeedGrid>
       </Layout>
     </>
   );

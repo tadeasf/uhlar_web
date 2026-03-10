@@ -6,19 +6,21 @@ export const PostItemsStyles = styled.section`
 `
 
 export const PostItemStyles = styled(Link)`
+  /* Grid item reset */
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+
   border: 1px solid rgba(191,161,69,0.18);
   padding: 28px 24px;
-  display: flex;
-  flex-direction: column;
   color: #fff;
   text-decoration: none;
   transition: border-color 0.4s ease, background 0.4s ease, transform 0.3s ease;
   position: relative;
   background: rgba(255,255,255,0.015);
-  box-sizing: border-box;
   min-height: 200px;
 
-  /* rohové ozdoby */
   &::before, &::after {
     content: '';
     position: absolute;
