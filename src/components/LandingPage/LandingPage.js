@@ -10,6 +10,7 @@ import {
   CardIcon,
   CardLabel,
   CardSubtitle,
+  FooterNote,
 } from "./LandingPageStyles"
 
 const containerVariants = {
@@ -104,6 +105,16 @@ const LandingPage = () => {
               )
             })}
           </CardsRow>
+
+          <motion.div variants={itemVariants}>
+            <FooterNote>
+              <span className="divider">✦</span>
+              <p>
+                Stránky jsou prozatím v přípravě — postupně přibývají nové sekce a funkce.
+                Neváhejte mě mezitím <a href="/contact">kontaktovat</a> přímo.
+              </p>
+            </FooterNote>
+          </motion.div>
         </motion.div>
       </LandingPageWrapper>
     </>

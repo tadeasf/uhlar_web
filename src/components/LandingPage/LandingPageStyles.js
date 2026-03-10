@@ -184,3 +184,38 @@ export const CardSubtitle = styled.span`
   @media(min-width:600px) { font-size: 15px; }
   @media(min-width:1024px) { font-size: 18px; }
 `
+
+export const FooterNote = styled.div`
+  text-align: center;
+  margin-top: 52px;
+  position: relative;
+  z-index: 1;
+
+  .divider {
+    display: block;
+    color: var(--primary-dark);
+    font-size: 11px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 1.6vw, 17px);
+    font-style: italic;
+    color: var(--inActive);
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(191,161,69,0.25);
+    transition: color 0.3s, border-color 0.3s;
+    &:hover {
+      color: var(--primary);
+      border-color: rgba(191,161,69,0.6);
+    }
+  }
+`
