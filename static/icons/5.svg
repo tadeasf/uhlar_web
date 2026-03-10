@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 90" version="1.1" id="svg5">
+  <defs id="defs2" />
+  <g id="layer1">
+    <path style="fill:#DEA843;stroke-width:0.352778" d="
+      M 58,72 L 58,58
+      M 58,58 L 58,48
+      M 58,48 L 32,36
+      M 58,48 L 84,36
+
+      M 32,36 L 32,26
+      M 32,36 L 14,26
+      M 84,36 L 84,26
+      M 84,36 L 102,26
+
+      M 14,26 L 14,17
+      M 32,26 L 32,17
+      M 84,26 L 84,17
+      M 102,26 L 102,17
+    "
+    fill="none" stroke="#DEA843" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Proband box (I) -->
+    <rect x="48" y="58" width="20" height="14" rx="1.5" fill="#DEA843"/>
+
+    <!-- Gen II boxes -->
+    <rect x="22" y="36" width="20" height="12" rx="1" fill="none" stroke="#DEA843" stroke-width="1.8"/>
+    <rect x="74" y="36" width="20" height="12" rx="1" fill="none" stroke="#DEA843" stroke-width="1.8"/>
+
+    <!-- Gen III boxes -->
+    <rect x="5"  y="20" width="18" height="10" rx="1" fill="none" stroke="#DEA843" stroke-width="1.4"/>
+    <rect x="23" y="20" width="18" height="10" rx="1" fill="none" stroke="#DEA843" stroke-width="1.4"/>
+    <rect x="75" y="20" width="18" height="10" rx="1" fill="none" stroke="#DEA843" stroke-width="1.4"/>
+    <rect x="93" y="20" width="18" height="10" rx="1" fill="none" stroke="#DEA843" stroke-width="1.4"/>
+
+    <!-- connection dots -->
+    <circle cx="58" cy="48" r="2.2" fill="#DEA843"/>
+    <circle cx="32" cy="36" r="1.8" fill="#DEA843"/>
+    <circle cx="84" cy="36" r="1.8" fill="#DEA843"/>
+  </g>
+</svg>
