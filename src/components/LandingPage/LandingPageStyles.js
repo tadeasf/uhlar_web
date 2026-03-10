@@ -48,7 +48,7 @@ export const LandingTitle = styled.div`
 
   h1 {
     font-family: 'Cinzel', serif;
-    font-size: clamp(28px, 5vw, 56px);
+    font-size: clamp(32px, 5.5vw, 62px);
     font-weight: 600;
     letter-spacing: 0.08em;
     margin: 0 0 0.3em 0;
@@ -57,7 +57,7 @@ export const LandingTitle = styled.div`
 
   p {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(16px, 2vw, 20px);
+    font-size: clamp(18px, 2.2vw, 23px);
     font-style: italic;
     color: var(--bodyColor);
     margin: 0;
@@ -80,19 +80,19 @@ export const CardsRow = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 16px;
   width: 100%;
-  max-width: 380px;
+  max-width: 420px;
   position: relative;
   z-index: 1;
 
   @media(min-width:600px) {
     grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
-    max-width: 960px;
+    gap: 22px;
+    max-width: 1060px;
   }
 
   @media(min-width:1024px) {
-    gap: 32px;
-    max-width: 1160px;
+    gap: 36px;
+    max-width: 1280px;
   }
 `
 
@@ -104,7 +104,7 @@ export const CardLink = styled.div`
   text-decoration: none;
   color: inherit;
   cursor: pointer;
-  padding: 28px 20px 24px;
+  padding: 32px 22px 28px;
   border: 1px solid rgba(191,161,69,0.15);
   background: rgba(255,255,255,0.02);
   transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease;
@@ -138,7 +138,7 @@ export const CardLink = styled.div`
   }
 
   @media(min-width:768px) {
-    padding: 36px 28px 32px;
+    padding: 42px 32px 36px;
   }
 `
 
@@ -155,32 +155,32 @@ export const CardIcon = styled.div`
     filter: drop-shadow(0 2px 8px rgba(191,161,69,0.4)) sepia(1) saturate(3) hue-rotate(5deg) brightness(1.1);
   }
 
-  @media(min-width:600px) { width: 64px; height: 64px; margin-bottom: 18px; }
-  @media(min-width:1024px) { width: 80px; height: 80px; }
+  @media(min-width:600px) { width: 72px; height: 72px; margin-bottom: 20px; }
+  @media(min-width:1024px) { width: 88px; height: 88px; }
 `
 
 export const CardLabel = styled.span`
   font-family: 'Cinzel', serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.06em;
   color: #fff;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   text-shadow: 0 2px 8px rgba(0,0,0,0.8);
   line-height: 1.3;
 
-  @media(min-width:600px) { font-size: 15px; }
-  @media(min-width:1024px) { font-size: 18px; }
+  @media(min-width:600px) { font-size: 16px; }
+  @media(min-width:1024px) { font-size: 20px; }
 `
 
 export const CardSubtitle = styled.span`
   font-family: 'Cormorant Garamond', serif;
-  font-size: 12px;
+  font-size: 13px;
   font-style: italic;
   color: var(--primary);
   text-shadow: 0 1px 6px rgba(0,0,0,0.8);
 
-  @media(min-width:600px) { font-size: 14px; }
-  @media(min-width:1024px) { font-size: 16px; }
+  @media(min-width:600px) { font-size: 15px; }
+  @media(min-width:1024px) { font-size: 18px; }
 `
