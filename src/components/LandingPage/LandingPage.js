@@ -67,7 +67,7 @@ const LandingPage = () => {
           <motion.div variants={itemVariants}>
             <LandingTitle>
               <h1>Martin Uhlář</h1>
-              <p>Genealog &amp; historik</p>
+              <p>Genealog &amp; rodopisec</p>
             </LandingTitle>
           </motion.div>
 
