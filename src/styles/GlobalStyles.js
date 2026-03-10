@@ -165,15 +165,20 @@ ol, ul { margin-top: calc(var(--sectionMargin)/2); margin-bottom: calc(var(--sec
 .learn__more { margin-top: calc(var(--gap) * 2); }
 
 .feed {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
   margin: 0 auto;
   max-width: 1400px;
-  >* {
-    flex: 0 0 100%;
-    @media(min-width:414px) { flex-basis: calc(50% - calc(var(--gap)/2)); }
-    @media(min-width:1024px) { flex-basis: calc(33.333% - 27px); }
+  width: 100%;
+
+  @media(min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media(min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--gap);
   }
 }
 

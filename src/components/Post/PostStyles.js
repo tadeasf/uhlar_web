@@ -2,28 +2,10 @@ import styled from "styled-components"
 import { Link } from "gatsby"
 
 export const PostItemsStyles = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  gap: 20px;
-  @media(min-width:1200px) { gap: var(--gap); }
+  display: contents;
 `
 
 export const PostItemStyles = styled(Link)`
-  /* Flex item — šířka definována zde, ne v rodiči */
-  flex: 0 0 100%;
-  max-width: 100%;
-
-  @media(min-width: 600px) {
-    flex: 0 0 calc(50% - 10px);
-    max-width: calc(50% - 10px);
-  }
-
-  @media(min-width: 1024px) {
-    flex: 0 0 calc(33.333% - 14px);
-    max-width: calc(33.333% - 14px);
-  }
-
   border: 1px solid rgba(191,161,69,0.18);
   padding: 28px 24px;
   display: flex;
@@ -34,6 +16,7 @@ export const PostItemStyles = styled(Link)`
   position: relative;
   background: rgba(255,255,255,0.015);
   box-sizing: border-box;
+  min-height: 200px;
 
   /* rohové ozdoby */
   &::before, &::after {
@@ -80,7 +63,7 @@ export const PostItemStyles = styled(Link)`
       font-style: normal;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--primary);
       margin: 0;
