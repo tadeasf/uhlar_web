@@ -23,19 +23,22 @@ export const BannerModuleStyles = styled.section`
   }
 
   .gradient {
-    background: radial-gradient(
-      at bottom left,
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0)
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.5) 35%,
+      rgba(0, 0, 0, 0.05) 100%
     );
+    z-index: 2;
   }
 
   .banner__content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     min-height: 33vh;
     width: 100%;
     max-width: 700px;
+    padding-bottom: 2rem;
 
     @media (min-width: 768px) {
       width: 66vw;
@@ -47,13 +50,18 @@ export const BannerModuleStyles = styled.section`
     }
 
     h1 {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+      border-bottom: 1px solid rgba(191, 161, 69, 0.4);
+      padding-bottom: 0.2em;
       display: inline-block;
     }
 
     h2 {
-      font-size: var(--h5);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: calc(var(--h5) * 1.1);
       font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0;
+      color: rgba(255,255,255,0.75);
     }
 
     h1,
@@ -66,5 +74,6 @@ export const BannerModuleStyles = styled.section`
   .banner__btns {
     display: flex;
     gap: var(--gap);
+    margin-top: 1.5rem;
   }
 `

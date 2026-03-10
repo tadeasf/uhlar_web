@@ -5,14 +5,15 @@ import styled from "styled-components";
 export const ButtonStyles = styled.button`
   color: #fff;
   background-color: transparent;
-  font-family: "Heebo", sans-serif;
+  font-family: 'Raleway', 'Heebo', sans-serif;
   border: 0;
   text-decoration: none;
   padding: 0;
   transition: color 0.3s ease;
-  text-transform: none;
-  font-size: var(--p);
-  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   position: relative;
   padding-bottom: 15px;
   align-self: flex-start;
@@ -23,7 +24,7 @@ export const ButtonStyles = styled.button`
     content: "";
     display: block;
     position: absolute;
-    height: 3px;
+    height: 1px;
     left: 0;
     right: 0;
     bottom: 8px;
