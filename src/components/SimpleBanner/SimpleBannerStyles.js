@@ -1,20 +1,22 @@
 import styled from "styled-components"
 
 export const SimpleBannerStyles = styled.section`
-  height: 60vh;
-  min-height: 360px;
+  height: 55vh;
+  min-height: 320px;
   position: relative;
   overflow: hidden;
 
+  /* GatsbyImage předávaný jako children dostane třídu banner__image */
   .banner__image {
-    position: absolute;
+    position: absolute !important;
     inset: 0;
     z-index: 1;
-    > div, img {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover;
-      object-position: center 25%;
+    width: 100% !important;
+    height: 100% !important;
+
+    img {
+      object-fit: cover !important;
+      object-position: center 25% !important;
     }
   }
 
@@ -25,8 +27,8 @@ export const SimpleBannerStyles = styled.section`
     background: linear-gradient(
       to top,
       rgba(10,10,10,0.92) 0%,
-      rgba(10,10,10,0.5) 45%,
-      rgba(10,10,10,0.15) 100%
+      rgba(10,10,10,0.55) 40%,
+      rgba(10,10,10,0.2) 100%
     );
   }
 

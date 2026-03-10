@@ -19,22 +19,22 @@ export const FeaturedServicesStyles = styled.section`
 
 export const FeaturedServiceStyles = styled.aside`
   min-height: 420px;
-  background-color: #050505;
-  flex: 0 0 80%;
+  background: #050505;
   overflow: hidden;
   scroll-snap-align: center;
   position: relative;
   border: 1px solid rgba(191,161,69,0.18);
   transition: border-color 0.5s ease, box-shadow 0.5s ease;
+  box-sizing: border-box;
 
-  @media(min-width:414px) { min-height: 440px; }
-  @media(min-width:768px) { min-height: 500px; flex-basis: 40%; }
-  @media(min-width:1024px) { min-height: 580px; }
-  @media(min-width:1200px) { flex-basis: 33.333%; flex-shrink: 1; }
+  flex: 0 0 85%;
+  @media(min-width:600px) { flex: 0 0 calc(50% - 10px); min-height: 440px; }
+  @media(min-width:1024px) { flex: 0 0 calc(33.333% - 14px); min-height: 520px; }
 
   .features__item--img {
     position: absolute; inset: 0; z-index: 1;
     transition: transform 0.5s ease, opacity 0.5s ease;
+    img { object-fit: cover !important; width: 100% !important; height: 100% !important; }
   }
 
   .features__item--content {
@@ -43,11 +43,8 @@ export const FeaturedServiceStyles = styled.aside`
     background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
     @media(min-width:768px) { padding: 28px 24px; }
     @media(min-width:1200px) { padding: 40px 32px; }
-    h4 {
-      font-family: 'Cinzel', serif; letter-spacing: 0.05em;
-      color: #fff; text-shadow: var(--textShadow); margin-bottom: 0.5rem;
-    }
-    p { color: var(--bodyColor); text-shadow: var(--textShadow); font-family: 'Cormorant Garamond', serif; font-style: italic; }
+    h4 { font-family: 'Cinzel', serif; letter-spacing: 0.05em; color: #fff; text-shadow: var(--textShadow); margin-bottom: 0.5rem; }
+    p  { color: var(--bodyColor); text-shadow: var(--textShadow); font-family: 'Cormorant Garamond', serif; font-style: italic; }
   }
 
   &:hover {
