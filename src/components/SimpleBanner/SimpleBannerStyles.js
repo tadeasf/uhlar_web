@@ -1,77 +1,58 @@
-/** @format */
-
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const SimpleBannerStyles = styled.section`
-  height: 70vh;
-  min-height: 400px;
+  height: 60vh;
+  min-height: 360px;
   position: relative;
-  padding: 30px var(--borderSpacing);
+  overflow: hidden;
+
+  .banner__image {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    > div, img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover;
+      object-position: center 25%;
+    }
+  }
+
+  .gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+      to top,
+      rgba(10,10,10,0.92) 0%,
+      rgba(10,10,10,0.5) 45%,
+      rgba(10,10,10,0.15) 100%
+    );
+  }
 
   .container {
     height: 100%;
     display: flex;
     align-items: flex-end;
-    justify-content: flex-start;
-  }
-
-  .banner__image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-
-    /* Gatsby Image uvnitř */
-    > div, img {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover;
-      object-position: center 30%;
-    }
-  }
-
-  /* Fallback pro statické img tagy */
-  img.banner__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 30%;
-  }
-
-  .gradient {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 2;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.85) 0%,
-      rgba(0, 0, 0, 0.4) 40%,
-      rgba(0, 0, 0, 0.1) 100%
-    );
+    padding: 0 var(--borderSpacing);
+    position: relative;
+    z-index: 3;
   }
 
   .banner__content {
-    position: relative;
-    z-index: 3;
-    padding-bottom: 2rem;
-
-    @media (min-width: 768px) {
-      width: 66vw;
-    }
+    padding-bottom: 2.5rem;
+    max-width: 700px;
 
     h1 {
+      font-family: 'Cinzel', serif;
       font-size: var(--bannerTitle);
-      display: inline-block;
+      font-weight: 600;
+      letter-spacing: 0.06em;
       text-shadow: var(--textShadow);
-
-      /* Zlatá linka pod nadpisem */
-      border-bottom: 1px solid rgba(191, 161, 69, 0.5);
+      margin: 0;
+      display: inline-block;
+      border-bottom: 1px solid rgba(191,161,69,0.4);
       padding-bottom: 0.2em;
     }
   }
-`;
+`

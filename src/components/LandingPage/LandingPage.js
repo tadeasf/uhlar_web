@@ -1,9 +1,10 @@
-import React from "react" // eslint-disable-line no-unused-vars
+import React from "react"
 import { Link } from "gatsby"
 import { motion } from "framer-motion"
 import { GlobalStyle } from "../../styles/GlobalStyles"
 import {
   LandingPageWrapper,
+  LandingTitle,
   CardsRow,
   CardLink,
   CardIcon,
@@ -13,20 +14,12 @@ import {
 
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.12 } },
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 }
 
 const cards = [
@@ -69,12 +62,15 @@ const LandingPage = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
+          style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}
         >
+          <motion.div variants={itemVariants}>
+            <LandingTitle>
+              <h1>Martin Uhlář</h1>
+              <p>Genealog &amp; historik</p>
+            </LandingTitle>
+          </motion.div>
+
           <CardsRow>
             {cards.map((card, index) => {
               const content = (
@@ -86,16 +82,10 @@ const LandingPage = () => {
                   <CardSubtitle>{card.subtitle}</CardSubtitle>
                 </>
               )
-
               return (
                 <motion.div key={index} variants={itemVariants}>
                   {card.external ? (
-                    <CardLink
-                      as="a"
-                      href={card.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <CardLink as="a" href={card.href} target="_blank" rel="noopener noreferrer">
                       {content}
                     </CardLink>
                   ) : (

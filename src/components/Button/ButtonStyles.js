@@ -1,21 +1,18 @@
-/** @format */
-
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const ButtonStyles = styled.button`
   color: #fff;
-  background-color: transparent;
-  font-family: 'Raleway', 'Heebo', sans-serif;
+  background: transparent;
+  font-family: 'Raleway', sans-serif;
   border: 0;
   text-decoration: none;
-  padding: 0;
+  padding: 0 0 14px 0;
   transition: color 0.3s ease;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   position: relative;
-  padding-bottom: 15px;
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
@@ -25,25 +22,18 @@ export const ButtonStyles = styled.button`
     display: block;
     position: absolute;
     height: 1px;
-    left: 0;
-    right: 0;
-    bottom: 8px;
-    background-color: var(--primary);
-    transition: left 0.3s ease;
+    left: 0; right: 0; bottom: 6px;
+    background: var(--primary);
+    transition: left 0.35s ease;
   }
 
-  &:focus {
-    color: var(--primary);
-  }
+  &:focus { color: var(--primary); }
 
-  @media (hover: hover) {
+  @media(hover: hover) {
     &:hover {
       cursor: pointer;
       color: var(--primary);
-
-      &::after {
-        left: 100%;
-      }
+      &::after { left: 100%; }
     }
   }
-`;
+`
