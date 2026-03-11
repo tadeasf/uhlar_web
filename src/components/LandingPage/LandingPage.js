@@ -113,6 +113,11 @@ const LandingPage = () => {
                 Stránky jsou prozatím v přípravě — postupně přibývají nové sekce a funkce.
                 Neváhejte mě mezitím <a href="/contact">kontaktovat</a> přímo.
               </p>
+              <p>
+                <a href="/zasady-ochrany-osobnich-udaju.pdf" target="_blank" rel="noopener noreferrer">
+                  Zásady ochrany osobních údajů
+                </a>
+              </p>
             </FooterNote>
           </motion.div>
         </motion.div>
