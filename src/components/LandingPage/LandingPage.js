@@ -10,6 +10,11 @@ import {
   CardIcon,
   CardLabel,
   CardSubtitle,
+  RodSection,
+  RodOrnament,
+  RodTitle,
+  RodSub,
+  RodMapLink,
   FooterNote,
 } from "./LandingPageStyles"
 
@@ -105,6 +110,24 @@ const LandingPage = () => {
               )
             })}
           </CardsRow>
+
+          <motion.div variants={itemVariants}>
+            <RodSection>
+              <RodOrnament aria-hidden="true">
+                <span>✦</span>
+                <span className="line" />
+                <span>✦</span>
+              </RodOrnament>
+              <RodTitle>Moje rodina</RodTitle>
+              <RodSub>877 předků · 73 míst · 5 století</RodSub>
+              <RodMapLink
+                href="/rod"
+                aria-label="Otevřít interaktivní mapu rodů"
+              >
+                Prozkoumat mapu rodů
+              </RodMapLink>
+            </RodSection>
+          </motion.div>
 
           <motion.div variants={itemVariants}>
             <FooterNote>

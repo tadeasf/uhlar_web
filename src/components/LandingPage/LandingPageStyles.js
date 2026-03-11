@@ -185,6 +185,91 @@ export const CardSubtitle = styled.span`
   @media(min-width:1024px) { font-size: 18px; }
 `
 
+export const RodSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 64px;
+  margin-bottom: 4px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 640px;
+`
+
+export const RodOrnament = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  color: var(--primary);
+  opacity: 0.45;
+
+  span { font-size: 9px; }
+
+  .line {
+    display: block;
+    width: clamp(60px, 15vw, 140px);
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary), transparent);
+    font-size: 0;
+  }
+`
+
+export const RodTitle = styled.h2`
+  font-family: 'Cinzel', serif;
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0 0 10px 0;
+`
+
+export const RodSub = styled.p`
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(14px, 1.8vw, 18px);
+  font-style: italic;
+  color: var(--primary);
+  opacity: 0.75;
+  margin: 0 0 28px 0;
+  letter-spacing: 0.04em;
+`
+
+export const RodMapLink = styled.a`
+  display: inline-block;
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--primary);
+  border: 1px solid rgba(191,161,69,0.35);
+  padding: 12px 32px;
+  position: relative;
+  transition: color 0.35s, border-color 0.35s, background 0.35s;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  &::before { top: 4px; left: 4px; border-top: 1px solid var(--primary); border-left: 1px solid var(--primary); }
+  &::after  { bottom: 4px; right: 4px; border-bottom: 1px solid var(--primary); border-right: 1px solid var(--primary); }
+
+  &:hover {
+    color: #fff;
+    border-color: rgba(191,161,69,0.75);
+    background: rgba(191,161,69,0.07);
+    &::before, &::after { opacity: 1; }
+  }
+`
+
 export const FooterNote = styled.div`
   text-align: center;
   margin-top: 52px;

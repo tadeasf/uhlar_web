@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa předků — Kamila & Monika Uhlářovy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --gold: #bfa145;
+      --gold-light: #d4b96a;
+      --gold-dim: rgba(191,161,69,0.18);
+      --gold-border: rgba(191,161,69,0.28);
+      --bg: #0a0a0a;
+      --bg2: #101010;
+      --bg3: #161616;
+      --text: #e8e2d4;
+      --text-dim: #7a7060;
+      --sidebar-w: 340px;
+      --header-h: 54px;
+      --timeline-h: 118px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Raleway', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+    /* Grain */
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9990;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 300px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 600;
+      height: var(--header-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.8rem;
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid var(--gold-border);
+      backdrop-filter: blur(16px);
+    }
+    .h-left { display: flex; flex-direction: column; gap: 1px; }
+    .h-brand {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600;
+      letter-spacing: 0.12em; color: var(--text); text-decoration: none;
+    }
+    .h-brand em { color: var(--gold); font-style: normal; }
+    .h-sub {
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .h-stats {
+      display: flex; gap: 1.4rem; align-items: center;
+    }
+    .h-stat { text-align: center; }
+    .h-stat-num { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold); line-height: 1; }
+    .h-stat-lbl { font-size: 0.52rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-top: 1px; }
+    .h-sep { width: 1px; height: 28px; background: var(--gold-border); }
+    .h-back {
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-dim); text-decoration: none; transition: color 0.3s;
+    }
+    .h-back:hover { color: var(--gold); }
+
+    /* ── MAP ── */
+    #map {
+      position: fixed;
+      top: var(--header-h); left: 0;
+      right: var(--sidebar-w);
+      bottom: var(--timeline-h);
+      z-index: 1;
+    }
+
+    /* Dark map tiles override */
+    .leaflet-container { background: #0d0d0d !important; }
+    .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.85) saturate(0.5); }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      position: fixed;
+      top: var(--header-h); right: 0; width: var(--sidebar-w);
+      bottom: var(--timeline-h);
+      background: var(--bg2);
+      border-left: 1px solid var(--gold-border);
+      overflow-y: auto; z-index: 2;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-border) transparent;
+    }
+
+    .sb-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; padding: 2.5rem; text-align: center; color: var(--text-dim);
+    }
+    .sb-empty-ornament {
+      font-size: 2.2rem; margin-bottom: 1.2rem; opacity: 0.3;
+      color: var(--gold);
+    }
+    .sb-empty p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.05rem; line-height: 1.7;
+    }
+
+    .sb-content { padding: 1.8rem; display: none; }
+    .sb-content.active { display: block; }
+
+    .sb-region {
+      font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem;
+    }
+    .sb-name {
+      font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--text); line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+    .sb-years {
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--text-dim);
+      font-style: italic; margin-bottom: 1.2rem;
+    }
+
+    .sb-divider {
+      height: 1px;
+      background: linear-gradient(to right, var(--gold-border), transparent);
+      margin: 1.2rem 0;
+    }
+
+    .sb-label {
+      font-size: 0.52rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.6rem;
+    }
+    .sb-surnames {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem;
+    }
+    .sb-surname {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem; font-style: italic;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      padding: 2px 8px; color: var(--text);
+    }
+    .sb-people {
+      display: flex; flex-direction: column; gap: 0.3rem;
+    }
+    .sb-person {
+      font-size: 0.82rem; color: var(--text-dim); display: flex; gap: 0.5rem;
+      align-items: flex-start; line-height: 1.4;
+    }
+    .sb-person::before { content: '—'; color: var(--gold); flex-shrink: 0; font-size: 0.7rem; margin-top: 2px; }
+    .sb-more {
+      font-size: 0.75rem; color: var(--text-dim); font-style: italic;
+      margin-top: 0.4rem; padding-left: 1rem;
+    }
+
+    .sb-count-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      padding: 4px 10px; margin-bottom: 1rem;
+    }
+    .sb-count-num { font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--gold); line-height: 1; }
+    .sb-count-lbl { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+
+    /* ── TIMELINE ── */
+    #timeline {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: var(--timeline-h); z-index: 10;
+      background: rgba(10,10,10,0.98);
+      border-top: 1px solid var(--gold-border);
+      backdrop-filter: blur(16px);
+      padding: 1rem 1.8rem 0.8rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .tl-top {
+      display: flex; align-items: baseline; justify-content: space-between;
+    }
+    .tl-year {
+      font-family: 'Cinzel', serif; font-size: 1.7rem; color: var(--gold);
+      letter-spacing: 0.04em; line-height: 1;
+    }
+    .tl-info {
+      font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .tl-info span { color: var(--gold); }
+
+    /* Slider */
+    input[type=range] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 1px;
+      background: var(--gold-border); outline: none; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 14px; height: 14px;
+      background: var(--gold); border-radius: 50%;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 1px var(--gold), 0 0 8px rgba(191,161,69,0.4);
+      cursor: pointer; transition: transform 0.15s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.4); }
+
+    .tl-ticks {
+      display: flex; justify-content: space-between; padding: 0 7px;
+    }
+    .tl-tick {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.52rem; letter-spacing: 0.06em;
+      color: var(--text-dim); cursor: pointer; transition: color 0.2s;
+      position: relative;
+    }
+    .tl-tick::before { content: '|'; display: block; text-align: center; margin-bottom: 1px; opacity: 0.3; font-size: 0.55rem; }
+    .tl-tick:hover { color: var(--gold); }
+    .tl-tick.active { color: var(--gold-light); }
+
+    /* ── MARKERS ── */
+    .custom-marker {
+      border-radius: 50%; cursor: pointer;
+      background: var(--gold);
+      border: 2px solid rgba(10,10,10,0.8);
+      box-shadow: 0 0 0 1px var(--gold), 0 0 6px rgba(191,161,69,0.5);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .custom-marker.active {
+      transform: scale(1.5) !important;
+      box-shadow: 0 0 0 2px var(--gold-light), 0 0 16px rgba(191,161,69,0.7);
+    }
+
+    @keyframes markerPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(191,161,69,0.6), 0 0 6px rgba(191,161,69,0.5); }
+      100% { box-shadow: 0 0 0 10px rgba(191,161,69,0), 0 0 6px rgba(191,161,69,0.5); }
+    }
+    .custom-marker.pulse { animation: markerPulse 0.8s ease-out; }
+
+    /* Leaflet popup */
+    .leaflet-popup-content-wrapper {
+      background: var(--bg2) !important;
+      border: 1px solid var(--gold-border) !important;
+      border-radius: 0 !important;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.6) !important;
+      color: var(--text);
+    }
+    .leaflet-popup-tip { background: var(--bg2) !important; }
+    .leaflet-popup-close-button { color: var(--text-dim) !important; }
+    .popup-name { font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.06em; color: var(--text); }
+    .popup-count { font-size: 0.7rem; color: var(--gold); margin-top: 3px; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+    .popup-hint { font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-top: 5px; }
+
+    /* Scrollbar */
+    #sidebar::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-track { background: transparent; }
+    #sidebar::-webkit-scrollbar-thumb { background: var(--gold-border); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      :root { --sidebar-w: 0px; --timeline-h: 150px; }
+      #map { right: 0; }
+      #sidebar { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <a href="/" class="h-brand">Martin <em>Uhlář</em></a>
+    <span class="h-sub">Mapa rodů · předci Kamily &amp; Moniky</span>
+  </div>
+  <div class="h-stats">
+    <div class="h-stat">
+      <div class="h-stat-num" id="statLocations">73</div>
+      <div class="h-stat-lbl">míst</div>
+    </div>
+    <div class="h-sep"></div>
+    <div class="h-stat">
+      <div class="h-stat-num">877</div>
+      <div class="h-stat-lbl">předků</div>
+    </div>
+    <div class="h-sep"></div>
+    <div class="h-stat">
+      <div class="h-stat-num" id="statVisible">0</div>
+      <div class="h-stat-lbl">zobrazeno</div>
+    </div>
+  </div>
+  <a href="/" class="h-back">← Zpět</a>
+</header>
+
+<div id="map"></div>
+
+<div id="sidebar">
+  <div class="sb-empty" id="sbEmpty">
+    <div class="sb-empty-ornament">✦</div>
+    <p>Přetáhni slider níže<br>nebo klikni na místo na mapě</p>
+  </div>
+  <div class="sb-content" id="sbContent"></div>
+</div>
+
+<div id="timeline">
+  <div class="tl-top">
+    <div class="tl-year" id="tlYear">~1525</div>
+    <div class="tl-info">Zobrazeno: <span id="tlVisible">0</span> / <span id="tlTotal">0</span> míst</div>
+  </div>
+  <input type="range" id="slider" min="1525" max="2024" value="1525" step="1" />
+  <div class="tl-ticks" id="tlTicks"></div>
+</div>
+
+<script>
+const PLACES = [{"id":"ždánice","name":"Ždánice","lat":50.058,"lng":14.896,"count":20,"surnames":["Dvořáková","Holub","Holubová","Kulhavá","Kulhavý","Nehasil"],"min_year":1654,"max_year":1867,"region":"Kolínsko","people":["Anna Holubová","Anna Nehasilová","Anna Staňková","Catharina","Dorota Vaněčková","Jakub Kulhavý","Jan Kulhavý","Jan Nehasil","Jiří Kulhavý","Josef Pohořelý","Josef Staněk","Ján Šedina","Kateřina Kulhavá","Kateřina Vosecká","Magdalena Dvořáková","Matěj Holub","Matěj Vaněček","Matěj Vosecký","Tomáš Vosecký","Václav Kulhavý"]},{"id":"staré_práchňany","name":"Staré Práchňany","lat":49.698,"lng":14.908,"count":12,"surnames":["Kletečka","Kletečková","Mička","Mičková","Zemanová"],"min_year":1756,"max_year":1876,"region":"Střední Čechy","people":["Anna","Antonín Kletečka","Barbora Kletečková","Bartoloměj Kletečka","František Kletečka","František Mička","Františka Mičková","Jan Kletečka","Josef Kletečka","Marie Magdalena Zemanová","Václav Kletečka","Čeněk Kletečka"]},{"id":"oleška","name":"Oleška","lat":49.927,"lng":14.776,"count":12,"surnames":["Burdová","Hlaváčková","Kopecká","Kopecký","Kulhavá","Nehasilová"],"min_year":1766,"max_year":1925,"region":"Střední Čechy","people":["Alžběta Hlaváčková","Anežka Kopecká","Anna Nehasilová","Barbora Šedina","Josef Pohořelý","Kateřina Burdová","Kateřina Kulhavá","Marie Vosecká","Martin Šedina","Stanislav František Pohořelý","Tomáš Vosecký","Václav Kopecký"]},{"id":"telce","name":"Telce","lat":50.278,"lng":13.952,"count":12,"surnames":["Hora","Horová","Lev","Levová","Reifová","Sadílková"],"min_year":1667,"max_year":1798,"region":"Slánsko","people":["Alžběta Sadílková","Anna Horová","Anna Levová","Jan Hora","Jan Římovský","Joseph Hora","Karel Lev","Kateřina Římovská","Ludmila Reifová","Martin Adam Hora","Mikuláš Římovský","Rosaria"]},{"id":"hukvaldy","name":"Hukvaldy","lat":49.624,"lng":18.189,"count":12,"surnames":["Boháč","Kolaita","Rek","Sobotík","Uhlarz","Uhlář"],"min_year":1670,"max_year":1843,"region":"Slezsko","people":["Anna","Anna Kolaita","Anna Rosaria Sobotík","Eduard Uhlář","Fabianus Sobotík","Francisca Rek","Georgius Uhlarz","Johann Thomas Uhlář","Johanna Boháč","Josefus Blasius Andreas Uhlarz","Jozef Johann Uhlář","Václav Boháč"]},{"id":"bohouňovice_ii","name":"Bohouňovice II","lat":50.012,"lng":14.945,"count":11,"surnames":["Koželský","Kubelka","Kubelka zv. Hurt","Kubelková","Novotná"],"min_year":1599,"max_year":1763,"region":"Kolínsko","people":["Alžběta Kubelková","Dorota Pitáková","Jan Čaubal","Ludmila Novotná","Magdalena Kubelková","Magdalena Čaubalová","Matěj Kubelka","Pavel Kubelka","Tomáš Koželský","Václav Kubelka zvaný Hurt"]},{"id":"uhřičice","name":"Uhřičice","lat":49.349,"lng":17.351,"count":11,"surnames":["Dusíková","Hapal","Hapalová","Roubal","Roubalová"],"min_year":1741,"max_year":1889,"region":"Střední Morava","people":["Božena Vránová","František Vrána","Františka Župková - Vránová","Ignác Roubal","Jan Vrána","Lucie Urbánková - Vránová","Mariana Roubalová","Martin Hapal","Martin Roubal","Martina Dusíková","Terezie Hapalová"]},{"id":"rychvald","name":"Rychvald","lat":49.848,"lng":18.366,"count":11,"surnames":["Bajboková","Dostál","Hanusek","Pardubicki","Pardubický"],"min_year":1751,"max_year":1888,"region":"Slezsko","people":["Adelheid Tkaczyk","Agnes Dostál","Barbora Bajboková","František Pardubický","Františka Rygielová","Josef Pardubicki","Josef Tkaczyk","Leopold Pardubický","Marianna Hanusek","Ondřej Žebrák","Veronika Žebráková"]},{"id":"vlkančice","name":"Vlkančice","lat":49.857,"lng":14.761,"count":10,"surnames":["Drož","Drožová","Novák","Pohořelý","Švanda"],"min_year":1722,"max_year":1825,"region":"Střední Čechy","people":["Antonín Novák","Antonín Pohořelý","Barbora Drožová","Jan Pohořelý","Josef Novák","Josef Švanda","Josephus Švanda","Ludmila Vokaunová","Magdalena","Václav Drož"]},{"id":"peruc","name":"Peruc","lat":50.324,"lng":13.988,"count":10,"surnames":["Kučera","Kučerová","Zázvorka","Zázvorková","Římovský"],"min_year":1645,"max_year":1769,"region":"Slánsko","people":["Anna Zázvorková","Jiřík Zázvorka","Jiřík Římovský","Josef Zázvorka","Kateřina Kučerová","Kateřina Čápová","Kašpar Kučera","Marie Zázvorková","Mikuláš Římovský","Tomáš Zázvorka"]},{"id":"přestavlky","name":"Přestavlky","lat":50.089,"lng":14.912,"count":9,"surnames":["Koželský","Kubelka","Mikule","Šifalda"],"min_year":1599,"max_year":1783,"region":"Kolínsko","people":["Jakub Šifalda","Kateřina Mikule","Kateřina Šifalda","Matěj Kubelka","Matěj Šifalda","Tomáš Koželský","Václav Kubelka zvaný Hurt","Václav Mikule"]},{"id":"moravská_ostrava","name":"Moravská Ostrava","lat":49.8356,"lng":18.2921,"count":9,"surnames":["Gold","Gärtner","Pardubicki","Uhlář","Volný"],"min_year":1755,"max_year":1912,"region":"Slezsko","people":["Anna Gärtner","Bedřich Eduard Uhlář","Marie Gold","Matouš Wolný","Michael Gärtner","Milada Anežka Pardubicki","Petr Johann Gold","Petronilla Volný","Rosina Poledníková"]},{"id":"pravětice","name":"Pravětice","lat":49.663,"lng":14.887,"count":8,"surnames":["Beneš","Javorský","Vondrušková"],"min_year":1775,"max_year":1937,"region":"Střední Čechy","people":["Barbora Merksbauerová","Eleonora Vondrušková","Josef Beneš","Josef Javorský","Josef Václav Javorský","Marie Halaška","Marie Magdalena Benešová","Václav Javorský"]},{"id":"rodná","name":"Rodná","lat":49.607,"lng":14.853,"count":8,"surnames":["Král","Macháčková","Stejskal","Stejskalová"],"min_year":1721,"max_year":1853,"region":"Střední Čechy","people":["Anna Macháčková","Josef Král","Karel Král","Marie Anna Stejskalová","Matouš Král","Matěj Král","Petronilla Vandrovcová","Václav Stejskal"]},{"id":"radlice","name":"Radlice","lat":50.045,"lng":14.956,"count":8,"surnames":["Bílek","Jírovská","Jírovský","Šedina","Šmejkal"],"min_year":1702,"max_year":1805,"region":"Kolínsko","people":["Dorota Kubelková","Ján Šedina","Marie Jírovská","Marie Magdalena Šmejkal","Martin Jírovský","Pawel Jírovský","Václav Jírovský","Vít Bílek"]},{"id":"polepy","name":"Polepy","lat":50.461,"lng":14.134,"count":8,"surnames":["Anger","Macková","Satran","Švachta"],"min_year":1616,"max_year":1779,"region":"Litoměřicko","people":["Anna Švachtová","Karel Anger","Kateřina Macková","Kateřina Šmídová","Pavel Švachta","Tomáš Nikodým Satran","Veronica Kutin?","Wincenz Anger"]},{"id":"hruška","name":"Hruška","lat":49.384,"lng":17.19,"count":8,"surnames":["Kahajová","Vrána","Župka"],"min_year":1625,"max_year":1781,"region":"Střední Morava","people":["Dorota Kahajová","Františka Župková - Vránová","Jakub Vrána","Jakub Župka","Jan Župka","Jiří Župka","Josef Župka","Martin Župka"]},{"id":"tatouňovice","name":"Tatouňovice","lat":49.744,"lng":14.821,"count":7,"surnames":["Honka","Mudroch","Wošatkin"],"min_year":1682,"max_year":1784,"region":"Střední Čechy","people":["Elisabetha Mudrochová","František Mudroch","Jakub Mudroch","Marie Honka","Marie Magdalena","Václav Mudroch","Weronica Wošatkin"]},{"id":"načeradec","name":"Načeradec","lat":49.651,"lng":14.836,"count":7,"surnames":["Czenský","Javorský","Král","Čenská"],"min_year":1774,"max_year":1937,"region":"Střední Čechy","people":["Anna Javorská","Antonie Rollant","Josef Javorský","Karel Kašpar Czenský","Karel Král","Karel Ludvík Čenský","Milada Čenská"]},{"id":"nučice","name":"Nučice","lat":49.936,"lng":14.751,"count":7,"surnames":["Hejtmánek","Hejtmánková","Hlaváček"],"min_year":1729,"max_year":1829,"region":"Střední Čechy","people":["Ján Hlaváček","Kateřina Hejtmánková","Magdalena Svatušková","Martin Hejtmánek","Matěj Hejtmánek","Matěj Hlaváček","Václav Hlaváček"]},{"id":"dolní_kruty","name":"Dolní Kruty","lat":50.029,"lng":14.985,"count":7,"surnames":["Kubelka","Kubelková","Čaubal"],"min_year":1671,"max_year":1739,"region":"Kolínsko","people":["Dorota Kubelková","Jan Čaubal","Jiří Kubelka","Jiří Čaubal","Magdalena","Marie Magdalena Šmejkal","Pavel Kubelka"]},{"id":"benešov","name":"Benešov","lat":49.7817,"lng":14.6864,"count":6,"surnames":["Kählig","Macháček","Proksch","Uhlář"],"min_year":1817,"max_year":1992,"region":"Střední Čechy","people":["Eduard Rudolf Bedřich František Proksch","Elisabeth Sofia Wilhelmina Kählig","František Xaver Macháček","Ida Marie Anna Leontina Alžběta Macháčková","Jan Macháček","Martin Eduard Uhlář"]},{"id":"jankov","name":"Jankov","lat":49.671,"lng":14.729,"count":6,"surnames":["Křížek","Sedláček","Tomanová","Veselý"],"min_year":1789,"max_year":1911,"region":"Střední Čechy","people":["Anna Sedláčková","Barbora Veselá","František Sedláček","František Veselý","Josefa Tomanová","Marie Křížek"]},{"id":"veltěže","name":"Veltěže","lat":50.289,"lng":14.076,"count":6,"surnames":["Graf","Tachecí","Vierekl","Viereklová"],"min_year":1789,"max_year":1854,"region":"Slánsko","people":["Anna Maria Graf","Anna Viereklová","Augustin Graf","Jacob Graf","Johann Vierekl","Marie Tachecí"]},{"id":"brňany","name":"Brňany","lat":50.421,"lng":14.195,"count":6,"surnames":["Kohejl Tachecí","Satranová","Tachecí"],"min_year":1673,"max_year":1825,"region":"Slánsko","people":["Josephus Benedictus Tachecí","Pavel Hermenegild Tachecí","Pavel Tomáš Tachecí","Veronika Satranová","Václav Tachecí","Václav Tomáš Kohejl Tachecí"]},{"id":"horní_hrachovice","name":"Horní Hrachovice","lat":49.588,"lng":14.806,"count":6,"surnames":["Czenský","Vavák","Wavak"],"min_year":1525,"max_year":1734,"region":"Střední Čechy","people":["František Czenský","Jakub Czenský","Jan Czenský","Kateřina Wavak","Petr Vavák","Tomáš Czenský"]},{"id":"velké_kunčice","name":"Velké Kunčice","lat":49.775,"lng":18.353,"count":6,"surnames":["Kožušník","Kožušníková","Mutinová"],"min_year":1774,"max_year":1894,"region":"Slezsko","people":["František Kožušník","Jan Kožušník","Johana Mutinová","Josef Kožušník","Ludmila Kožušníková","Mariana"]},{"id":"hlučín","name":"Hlučín","lat":49.8989,"lng":18.1884,"count":6,"surnames":["Gold","Tegel"],"min_year":1760,"max_year":1838,"region":"Slezsko","people":["Joanna","Joannes Gold","Johann Gold","Petr Johann Gold","Theresia Kastiříková","Therezia Tegel"]},{"id":"albrechtice","name":"Albrechtice (Jezeří)","lat":50.533,"lng":13.493,"count":6,"surnames":["Glasser","Hollmotz","Proksch","Richter"],"min_year":1769,"max_year":1843,"region":"Severní Čechy","people":["Anna Elizabetha Hollmotz","Anna Francizka Glasser","Anna Maria Richter","Eduard Proksch","Joannes Andreas Proksch","Johannes Andreas Hollmotz"]},{"id":"záhoříčko","name":"Záhoříčko","lat":49.751,"lng":14.834,"count":5,"surnames":["Křemen"],"min_year":1678,"max_year":1846,"region":"Střední Čechy","people":["Anna Křemen","Jan Křemen","Pavel Křemen","Petr Křemen","Václav Křemen"]},{"id":"hrnčíře","name":"Hrnčíře","lat":49.62,"lng":14.861,"count":5,"surnames":["Javorský","Parus"],"min_year":1734,"max_year":1843,"region":"Střední Čechy","people":["Dorota Parus","Jiří Javorský","Pavel Parus","Václav Javorský","Vít Javorský"]},{"id":"černýšovice","name":"Černýšovice","lat":49.684,"lng":14.748,"count":5,"surnames":["Boš","Dušková","Rypáček"],"min_year":1743,"max_year":1825,"region":"Střední Čechy","people":["Jakub Boš","Jan Boš","Kateřina Rypáček","Pavel Boš","Rozálie Dušková"]},{"id":"výžerky","name":"Výžerky","lat":49.987,"lng":14.753,"count":5,"surnames":["Hejtmánek","Kulhánková","Smejkalová"],"min_year":1660,"max_year":1768,"region":"Střední Čechy","people":["Anna Kulhánková","Martin Hejtmánek","Matěj Hejtmánek","Rozina Smejkalová","Václav Hejtmánek"]},{"id":"dušníky","name":"Dušníky","lat":50.358,"lng":14.448,"count":5,"surnames":["Brhovská","Brhovský","Novotná"],"min_year":1778,"max_year":1846,"region":"Mělnicko","people":["Alžbeta Brhovská","Barbora Novotná","Josef Brhovský","Martin Novotný","Matěj Brhovský"]},{"id":"třebíz","name":"Třebíz","lat":50.289,"lng":14.058,"count":5,"surnames":["Brhovská","Horová","Plívová","Zázvorka"],"min_year":1828,"max_year":1920,"region":"Slánsko","people":["Alžbeta Brhovská","Božena Horová","Josef Zázvorka","Karolína Zázvorková","Marie Plívová"]},{"id":"daměnice","name":"Daměnice","lat":49.705,"lng":14.856,"count":5,"surnames":["Czenský","Janouš"],"min_year":1699,"max_year":1828,"region":"Střední Čechy","people":["František Czenský","Jakub Janouš","Karel Kašpar Czenský","Kateřina Janouš","Kateřina Suchanová z Prudic"]},{"id":"cerhenice","name":"Cerhenice","lat":50.091,"lng":15.091,"count":5,"surnames":["Holub","Němcová","Němec"],"min_year":1847,"max_year":1874,"region":"Kolínsko","people":["Dorota Waniecžek","František Holub","Jan Němec","Josef Němec","Ludmila Němcová"]},{"id":"klenovice","name":"Klenovice na Hané","lat":49.363,"lng":17.154,"count":5,"surnames":["Novotný","Vláčilová","Ševčíková"],"min_year":1746,"max_year":1830,"region":"Střední Morava","people":["Dominik Novotný","František Novotný","Jan Novotný","Tereza Ševčíková","Viktorie Vláčilová"]},{"id":"langendorf","name":"Langendorf","lat":49.921,"lng":18.198,"count":5,"surnames":["Jureczek","Jurezek","Svaczina"],"min_year":1660,"max_year":1732,"region":"Slezsko","people":["Anna Jurezek","Barbara","Martinus Svaczina","Matthias Svaczina","Simon Jureczek Jaroschek"]},{"id":"běleč","name":"Běleč","lat":49.559,"lng":14.871,"count":5,"surnames":["Fialová","Král","Nedvědová","Stibor"],"min_year":1753,"max_year":1876,"region":"Střední Čechy","people":["Dorota Fialová","Josef Stibor","Kateřina Nedvědová","Marie Stiborová","Václav Král"]},{"id":"vračkovice","name":"Vračkovice","lat":49.768,"lng":14.854,"count":4,"surnames":["Kletečková","Kučerová","Křemen"],"min_year":1852,"max_year":1908,"region":"Střední Čechy","people":["Amálie Kučerová","Anna Radvanová","Josef Křemen","Josefa Kletečková"]},{"id":"buková","name":"Buková","lat":49.655,"lng":14.932,"count":4,"surnames":["Březinová","Malá","Malý"],"min_year":1750,"max_year":1829,"region":"Střední Čechy","people":["František Malý","Jan Malý","Josefa Malá","Marie Magdalena Březinová"]},{"id":"noskov","name":"Noskov","lat":49.608,"lng":14.876,"count":4,"surnames":["Král","Nedvěd","Nedvědová"],"min_year":1825,"max_year":1887,"region":"Střední Čechy","people":["František Nedvěd","Františka Nedvědová","Jaroslav Král","Karel Král"]},{"id":"újezdec","name":"Újezdec","lat":50.017,"lng":14.876,"count":4,"surnames":["Jírovský","Kubelková"],"min_year":1702,"max_year":1763,"region":"Kolínsko","people":["Alžběta Kubelková","Martin Jírovský","Pawel Jírovský","Václav Jírovský"]},{"id":"střednice","name":"Střednice","lat":50.376,"lng":14.415,"count":4,"surnames":["Berger","Rynda - Weiss"],"min_year":1595,"max_year":1623,"region":"Mělnicko","people":["Dorota Ryndová","Havel Berger","Ludmila","Matěj Rynda - Weiss"]},{"id":"roudnice","name":"Roudnice nad Labem","lat":50.4257,"lng":14.2173,"count":4,"surnames":["Anger","Janovská","Mašek"],"min_year":1784,"max_year":1811,"region":"Litoměřicko","people":["Alžběta Anger","Anna Mašková","Jan Mašek","Marie Anna Janovská"]},{"id":"charvatce","name":"Charvatce","lat":50.412,"lng":14.121,"count":4,"surnames":["Holub","Holubová","Kaše","Kučerová"],"min_year":1769,"max_year":1881,"region":"Slánsko","people":["Anna Holubová","Josef Holub","Kateřina Kučerová","Rosalie Kaše"]},{"id":"chotěšov","name":"Chotěšov","lat":50.435,"lng":14.151,"count":4,"surnames":["Hoffmann","Hrzán","Hrzánová"],"min_year":1766,"max_year":1790,"region":"Litoměřicko","people":["Jan Hrzán","Kateřina Hoffmann","Marianna Hrzánová","Václav Hrzán"]},{"id":"polkovice","name":"Polkovice","lat":49.374,"lng":17.399,"count":4,"surnames":["Jílek","Vláčil","Vrtělová"],"min_year":1746,"max_year":1791,"region":"Střední Morava","people":["Brigitta Vrtělová","Gabriel Vláčil","Klára Jílek","Tereza Ševčíková"]},{"id":"zlobice","name":"Zlobice","lat":49.341,"lng":17.254,"count":4,"surnames":["Hlobilová","Kmíchal","Zmidlochová"],"min_year":1772,"max_year":1810,"region":"Střední Morava","people":["Apolonie Zmidlochová","Jan Kmíchal","Marianna Kmíchalová","Veronika Hlobilová"]},{"id":"milovanice","name":"Milovanice","lat":49.388,"lng":14.152,"count":4,"surnames":["Hruška"],"min_year":1632,"max_year":1814,"region":"Písecko","people":["Jan Hruška","Josef Hruška","Vojtěch Hruška","Václav Hruška"]},{"id":"doubravčany","name":"Doubravčany","lat":49.879,"lng":14.805,"count":3,"surnames":["Pohořelý","Svatuška"],"min_year":1767,"max_year":1825,"region":"Střední Čechy","people":["Antonín Pohořelý","Josef Svatuška","Magdalena Svatušková"]},{"id":"volešná","name":"Volešná","lat":49.644,"lng":14.773,"count":3,"surnames":["Rezková","Slabá","Slabý"],"min_year":1827,"max_year":1872,"region":"Střední Čechy","people":["Anna Slabá","František Slabý","Kristina Rezková"]},{"id":"vlašim","name":"Vlašim","lat":49.7056,"lng":14.8981,"count":3,"surnames":["Holubová","Král","Křemenová"],"min_year":1916,"max_year":1963,"region":"Střední Čechy","people":["Bohumil Král","Marie Holubová","Vlasta Křemenová"]},{"id":"rousínov","name":"Rousínov","lat":49.854,"lng":14.779,"count":3,"surnames":["Pohořelý","Veselá"],"min_year":1712,"max_year":1756,"region":"Střední Čechy","people":["Jan Vít Pohořelý","Josef Pohořelý","Ludmila Veselá"]},{"id":"senohraby","name":"Senohraby","lat":49.919,"lng":14.715,"count":3,"surnames":["Horová","Tachecí"],"min_year":1912,"max_year":1942,"region":"Střední Čechy","people":["Anna Tachecí","Božena Horová","Jaroslav Tachecí"]},{"id":"křivenice","name":"Křivenice","lat":50.401,"lng":14.318,"count":3,"surnames":["Feixová","Novák","Nováková"],"min_year":1730,"max_year":1814,"region":"Mělnicko","people":["Anna Tereza (Kateřina) Feixová","Josephus Novák","Ludmila Nováková"]},{"id":"praha","name":"Praha","lat":50.0755,"lng":14.4378,"count":3,"surnames":["Křemenová","Prokschová","Uhlářová"],"min_year":1935,"max_year":2021,"region":"Praha","people":["Jana Prokschová","Monika Štěpánka Uhlářová","Vlasta Křemenová"]},{"id":"třtice","name":"Třtice","lat":50.395,"lng":14.073,"count":3,"surnames":["Janovský"],"min_year":1710,"max_year":1754,"region":"Slánsko","people":["František Janovský","Kateřina","Václav Bartoloměj Janovský"]},{"id":"břežany","name":"Břežany nad Ohří","lat":50.341,"lng":13.987,"count":3,"surnames":["Hruška","Šimoníček"],"min_year":1774,"max_year":1798,"region":"Slánsko","people":["Jan Hruška","Jozef Šimoníček","Marie Barbora Šimoníčková"]},{"id":"vlkoš","name":"Vlkoš","lat":49.388,"lng":17.382,"count":3,"surnames":["Zoubek","Černošek"],"min_year":1768,"max_year":1813,"region":"Střední Morava","people":["Antonín Černošek","Joannes Černošek","Theresia Zoubek"]},{"id":"žalkovice","name":"Žalkovice","lat":49.328,"lng":17.485,"count":3,"surnames":["Hlobil","Černošek"],"min_year":1738,"max_year":1768,"region":"Střední Morava","people":["Anna Hlobil","Franciscus Černošek","Joannes Černošek"]},{"id":"ludgeřovice","name":"Ludgeřovice","lat":49.875,"lng":18.242,"count":3,"surnames":["Svačina","Svačinová"],"min_year":1799,"max_year":1851,"region":"Slezsko","people":["Antonie Svačinová","Antonín Svačina","Matyáš Svačina"]},{"id":"kozmice","name":"Kozmice","lat":49.912,"lng":18.161,"count":3,"surnames":["Kermascher","Pustelník"],"min_year":1788,"max_year":1819,"region":"Slezsko","people":["Konstantin Pustelník","Marianna Kermascher","Thomas Pustelník"]},{"id":"bohuslavice","name":"Bohuslavice","lat":49.964,"lng":18.134,"count":3,"surnames":["Kermascher","Kermatschek","Pustelník"],"min_year":1756,"max_year":1788,"region":"Slezsko","people":["Marianna Kermascher","Matthias Kermatschek","Thomas Pustelník"]},{"id":"skalsko","name":"Skalsko","lat":50.483,"lng":14.735,"count":2,"surnames":["Pecháček","Pecháčková"],"min_year":null,"max_year":null,"region":"Mělnicko","people":["Jan Pecháček","Kateřina Pecháčková"]},{"id":"měrůtky","name":"Měrůtky","lat":49.367,"lng":17.219,"count":2,"surnames":["Hlaváč"],"min_year":1807,"max_year":1843,"region":"Střední Morava","people":["Filip Hlaváč","František Hlaváč"]},{"id":"bobrovníky","name":"Bobrovníky","lat":49.853,"lng":18.144,"count":2,"surnames":["Mikesková","Pustelník"],"min_year":1819,"max_year":1821,"region":"Slezsko","people":["Anna Mikesková","Konstantin Pustelník"]},{"id":"sedlnice","name":"Sedlnice","lat":49.647,"lng":18.158,"count":2,"surnames":["Halbgebauer","Krischke"],"min_year":1814,"max_year":1817,"region":"Slezsko","people":["Alžběta Halbgebauer","Leopold Krischke"]},{"id":"nová_horka","name":"Nová Horka","lat":49.668,"lng":18.151,"count":2,"surnames":["Svačina","Svačinová"],"min_year":1829,"max_year":1890,"region":"Slezsko","people":["Antonie Svačinová","Július Svačina"]},{"id":"bílina","name":"Bílina","lat":50.549,"lng":13.781,"count":2,"surnames":["Kählig"],"min_year":1759,"max_year":1787,"region":"Severní Čechy","people":["Georgius Friedericus Wilhelmus Kählig","Gottfried Kählig"]},{"id":"mělnické_vtelno","name":"Mělnické Vtelno","lat":50.399,"lng":14.388,"count":1,"surnames":["Borecká"],"min_year":1678,"max_year":1678,"region":"Mělnicko","people":["Kateřina Borecká"]},{"id":"ostravice","name":"Ostravice","lat":49.571,"lng":18.234,"count":1,"surnames":["Uhlář"],"min_year":1872,"max_year":1872,"region":"Slezsko","people":["Jan Uhlář"]}];
+
+const MILESTONES = [1525,1600,1650,1700,1750,1800,1850,1900,1950,2024];
+document.getElementById('tlTotal').textContent = PLACES.length;
+
+// Map init
+const map = L.map('map', {
+  center: [49.95, 15.9],
+  zoom: 7,
+  zoomControl: true,
+  attributionControl: false
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  subdomains: 'abcd', maxZoom: 18
+}).addTo(map);
+L.control.attribution({ prefix: false, position: 'bottomleft' }).addTo(map);
+
+// Size fn: log scale by count
+function markerSize(count) {
+  return Math.round(6 + Math.log(count) * 4.5);
+}
+
+// Markers
+const markers = {}, markerEls = {}, markerVisible = {};
+
+PLACES.forEach(p => {
+  const size = markerSize(p.count);
+  const el = document.createElement('div');
+  el.className = 'custom-marker';
+  el.style.cssText = `width:${size}px;height:${size}px;display:none;`;
+
+  const icon = L.divIcon({ html: el, className: '', iconSize: [size, size], iconAnchor: [size/2, size/2] });
+  const marker = L.marker([p.lat, p.lng], { icon });
+
+  marker.bindPopup(`
+    <div class="popup-name">${p.name}</div>
+    <div class="popup-count">${p.count} ${p.count === 1 ? 'předek' : p.count < 5 ? 'předci' : 'předků'}</div>
+    <div class="popup-hint">Klikni pro detail →</div>
+  `, { closeButton: false, offset: [0, -size/2] });
+
+  marker.on('click', () => showSidebar(p));
+  marker.addTo(map);
+
+  markers[p.id] = marker;
+  markerEls[p.id] = el;
+  markerVisible[p.id] = false;
+});
+
+// Sidebar
+function showSidebar(p) {
+  document.getElementById('sbEmpty').style.display = 'none';
+  const sc = document.getElementById('sbContent');
+  sc.className = 'sb-content active';
+
+  const yearRange = (p.min_year && p.max_year)
+    ? (p.min_year === p.max_year ? `${p.min_year}` : `${p.min_year} – ${p.max_year}`)
+    : '–';
+
+  const surnameHtml = p.surnames.map(s => `<span class="sb-surname">${s}</span>`).join('');
+
+  const displayPeople = p.people.filter(Boolean).slice(0, 12);
+  const remaining = p.people.filter(Boolean).length - displayPeople.length;
+  const peopleHtml = displayPeople.map(n => `<div class="sb-person">${n}</div>`).join('');
+  const moreHtml = remaining > 0 ? `<div class="sb-more">…a ${remaining} dalších</div>` : '';
+
+  sc.innerHTML = `
+    <div class="sb-region">${p.region}</div>
+    <div class="sb-name">${p.name}</div>
+    <div class="sb-years">${yearRange}</div>
+    <div class="sb-count-badge">
+      <div class="sb-count-num">${p.count}</div>
+      <div class="sb-count-lbl">${p.count === 1 ? 'předek' : 'předků'}</div>
+    </div>
+    <div class="sb-label">Příjmení</div>
+    <div class="sb-surnames">${surnameHtml}</div>
+    <div class="sb-divider"></div>
+    <div class="sb-label">Osoby</div>
+    <div class="sb-people">${peopleHtml}${moreHtml}</div>
+  `;
+
+  // Highlight
+  Object.values(markerEls).forEach(el => el.classList.remove('active'));
+  markerEls[p.id]?.classList.add('active');
+
+  // Pan to marker
+  map.setView([p.lat, p.lng], Math.max(map.getZoom(), 10), { animate: true });
+}
+
+// Ticks
+const ticksEl = document.getElementById('tlTicks');
+MILESTONES.forEach(y => {
+  const t = document.createElement('span');
+  t.className = 'tl-tick';
+  t.textContent = y === 2024 ? 'dnes' : y;
+  t.dataset.year = y;
+  t.addEventListener('click', () => { document.getElementById('slider').value = y; updateMap(y); });
+  ticksEl.appendChild(t);
+});
+
+// Update map
+let lastSet = new Set();
+function updateMap(year) {
+  const y = parseInt(year);
+  document.getElementById('tlYear').textContent = y <= 1525 ? '~1525' : y >= 2024 ? 'dnes' : year;
+
+  document.querySelectorAll('.tl-tick').forEach(t => {
+    t.classList.toggle('active', parseInt(t.dataset.year) <= y);
+  });
+
+  let visible = 0;
+  PLACES.forEach(p => {
+    const show = (!p.min_year || p.min_year <= y);
+    const el = markerEls[p.id];
+    const wasVisible = lastSet.has(p.id);
+
+    if (show) {
+      el.style.display = 'block';
+      visible++;
+      if (!wasVisible) {
+        el.classList.add('pulse');
+        setTimeout(() => el.classList.remove('pulse'), 800);
+        lastSet.add(p.id);
+      }
+    } else {
+      el.style.display = 'none';
+      lastSet.delete(p.id);
+    }
+  });
+
+  document.getElementById('tlVisible').textContent = visible;
+  document.getElementById('statVisible').textContent = visible;
+}
+
+// Slider
+const slider = document.getElementById('slider');
+slider.addEventListener('input', e => updateMap(e.target.value));
+
+// Auto-play
+let autoplay = null;
+function startAutoplay() {
+  let y = 1525;
+  autoplay = setInterval(() => {
+    y += 2;
+    if (y > 2024) { clearInterval(autoplay); autoplay = null; return; }
+    slider.value = y;
+    updateMap(y);
+  }, 25);
+}
+setTimeout(startAutoplay, 600);
+slider.addEventListener('mousedown', () => { if (autoplay) { clearInterval(autoplay); autoplay = null; } });
+slider.addEventListener('touchstart', () => { if (autoplay) { clearInterval(autoplay); autoplay = null; } });
+
+// Init
+updateMap(1525);
+</script>
+</body>
+</html>
