@@ -119,7 +119,7 @@ const LandingPage = () => {
                 <span>✦</span>
               </RodOrnament>
               <RodTitle>Moje rodina</RodTitle>
-              <RodSub>5 000 předků · 300 míst · 5 století</RodSub>
+              <RodSub>5 000 předků · 203 míst · 5 století</RodSub>
               <RodMapLink
                 href="/rod"
                 aria-label="Otevřít interaktivní mapu rodů"
