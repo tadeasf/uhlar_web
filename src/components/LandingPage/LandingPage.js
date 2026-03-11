@@ -117,6 +117,10 @@ const LandingPage = () => {
                 <a href="/zasady-ochrany-osobnich-udaju.pdf" target="_blank" rel="noopener noreferrer">
                   Zásady ochrany osobních údajů
                 </a>
+                {" · "}
+                <a href="/vseobecne-obchodni-podminky.pdf" target="_blank" rel="noopener noreferrer">
+                  Všeobecné obchodní podmínky
+                </a>
               </p>
             </FooterNote>
           </motion.div>
