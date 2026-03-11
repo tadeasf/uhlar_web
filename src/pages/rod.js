@@ -3,6 +3,7 @@
 import * as React from "react"
 import Seo from "../components/SEO"
 
+// Leaflet potřebuje window — načítáme dynamicky jen na klientu
 const RodMap = React.lazy(() => import("../components/RodMap/RodMap"))
 
 const RodPage = () => {
