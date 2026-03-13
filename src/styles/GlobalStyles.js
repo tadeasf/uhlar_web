@@ -47,18 +47,6 @@ export const GlobalStyle = createGlobalStyle`
   @media(min-width:1200px) { --p: 18px; }
 }
 
-/* ── Light mode overrides ───────────────────────────────────────── */
-body.light {
-  --background: #f5f0e8;
-  --primary: #9a7c2a;
-  --primary-light: #b8962e;
-  --primary-dark: #6b5519;
-  --bodyColor: #4a3f2f;
-  --inActive: #b0a48a;
-  --boxShadow: 0px 20px 40px rgba(0,0,0,0.12);
-  --textShadow: 0px 2px 8px rgba(0,0,0,0.15);
-}
-
 *, *::before, *::after { box-sizing: border-box; scroll-behavior: smooth; }
 
 body {
@@ -69,26 +57,7 @@ body {
   color: #fff;
   overflow-x: hidden;
   font-size: var(--p);
-  transition: background-color 0.35s ease, color 0.35s ease;
 }
-
-body.light {
-  color: #1a1209;
-}
-
-body.light p { color: var(--bodyColor); }
-
-body.light h1, body.light h2, body.light h3, body.light h4 { color: #1a1209; }
-
-body.light a { color: var(--primary); }
-body.light a:hover { color: var(--primary-light); }
-
-body.light hr {
-  background: linear-gradient(to right, transparent, var(--primary), transparent);
-  opacity: 0.25;
-}
-
-body.light blockquote { color: var(--bodyColor); }
 
 /* Grain overlay */
 body::after {
@@ -101,8 +70,6 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 300px 300px;
 }
-
-body.light::after { opacity: 0.015; }
 
 h1, h2, h3, h4 {
   font-family: 'Cinzel', serif;

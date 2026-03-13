@@ -31,12 +31,6 @@ export const NavModuleStyles = styled.nav`
     display: flex;
     align-items: center;
     border-right: 1px solid rgba(191,161,69,0.12);
-    transition: background 0.35s ease;
-  }
-
-  body.light & .menu {
-    background: #ede7d9;
-    border-right-color: rgba(154,124,42,0.2);
   }
 `
 
@@ -55,9 +49,6 @@ export const NavTopLevel = styled.ul`
     span { color: var(--primary); }
     &:hover { color: var(--primary); > a { color: var(--primary); } }
   }
-
-  body.light & > li a,
-  body.light & > li > button { color: #1a1209; }
 
   > li > button {
     background: transparent; padding: 0; color: #fff;
@@ -85,8 +76,6 @@ export const SubNavStyles = styled(motion.ul)`
     &:hover > a { color: var(--primary); }
   }
 
-  body.light & > li a { color: #3a2e1e; }
-
   @media(min-width:1024px) { padding-left: var(--gap); }
   hr { margin: 10px 0; }
 `
@@ -100,12 +89,8 @@ export const HamburgerStyles = styled(motion.button)`
   .bar {
     display: block; background: #fff;
     height: 2px; border-radius: 1px;
-    transition: background 0.35s ease;
     &:nth-of-type(2) { margin: 8px 0; background: var(--primary); }
   }
-
-  body.light & .bar { background: #1a1209; }
-  body.light & .bar:nth-of-type(2) { background: var(--primary); }
 `
 
 export const LogoStyles = styled.div`
@@ -117,31 +102,4 @@ export const LogoStyles = styled.div`
   span { color: var(--primary); }
   @media(min-width:1024px) { font-size: 21px; }
   &:hover a { color: var(--primary); }
-
-  body.light & a { color: #1a1209; }
-`
-
-export const ThemeToggleStyles = styled.button`
-  background: transparent;
-  border: 1px solid ${({ isLight }) => isLight ? 'rgba(154,124,42,0.4)' : 'rgba(191,161,69,0.3)'};
-  border-radius: 50%;
-  width: 34px; height: 34px;
-  padding: 6px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: ${({ isLight }) => isLight ? '#9a7c2a' : '#bfa145'};
-  transition: all 0.3s ease;
-  outline: none;
-  flex-shrink: 0;
-
-  svg { width: 100%; height: 100%; }
-
-  &:hover {
-    background: ${({ isLight }) => isLight ? 'rgba(154,124,42,0.1)' : 'rgba(191,161,69,0.1)'};
-    border-color: var(--primary);
-    color: var(--primary-light);
-    transform: scale(1.1);
-  }
-
-  @media(min-width:1024px) { width: 38px; height: 38px; }
 `
