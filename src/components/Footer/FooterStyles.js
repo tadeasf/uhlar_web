@@ -39,6 +39,7 @@ export const FooterMenuStyles = styled.div`
     border-bottom: 1px solid rgba(191,161,69,0.3);
     padding-bottom: 0.2em;
     a { color: #fff; text-decoration: none; }
+    body.light & a { color: #1a1209; }
   }
 
   ul {
@@ -77,5 +78,6 @@ export const CopyrightStyles = styled.div`
     margin: 0; font-family: 'Raleway', sans-serif; font-size: 12px; letter-spacing: 0.04em;
     a { color: #fff; font-weight: 600; text-decoration: none; &:hover { color: var(--primary); } }
     span { color: var(--primary); }
+    body.light & a { color: #1a1209; }
   }
 `

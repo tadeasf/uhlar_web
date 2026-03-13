@@ -20,6 +20,7 @@ export const FeaturedProductsStyles = styled.section`
 export const FeaturedProductStyles = styled.aside`
   min-height: 420px;
   background: #050505;
+  body.light & { background: rgba(0,0,0,0.04); }
   overflow: hidden;
   scroll-snap-align: center;
   position: relative;
@@ -44,7 +45,7 @@ export const FeaturedProductStyles = styled.aside`
     background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
     @media(min-width:768px) { padding: 28px 24px; }
     @media(min-width:1200px) { padding: 40px 32px; }
-    h4 { font-family: 'Cinzel', serif; letter-spacing: 0.05em; color: #fff; text-shadow: var(--textShadow); margin-bottom: 0.5rem; }
+    h4 { font-family: 'Cinzel', serif; letter-spacing: 0.05em; color: #fff; body.light & { color: #1a1209; } text-shadow: var(--textShadow); margin-bottom: 0.5rem; }
     p  { color: var(--bodyColor); text-shadow: var(--textShadow); font-family: 'Cormorant Garamond', serif; font-style: italic; }
   }
 

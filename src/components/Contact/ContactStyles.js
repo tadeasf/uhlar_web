@@ -30,6 +30,7 @@ export const ContactStyles = styled.section`
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(191,161,69,0.25);
     color: #fff;
+    body.light & { color: #1a1209; }
     padding: 14px 16px;
     font-family: 'Raleway', sans-serif;
     font-size: 14px;
@@ -58,6 +59,7 @@ export const ContactStyles = styled.section`
     &:hover {
       background: var(--primary);
       color: #000;
+      body.light & { background: #f0ead8; color: #1a1209; }
     }
   }
 `
