@@ -15,6 +15,7 @@ export const PostItemStyles = styled(Link)`
   border: 1px solid rgba(191,161,69,0.18);
   padding: 28px 24px;
   color: #fff;
+  body.light & { color: #1a1209; background: rgba(255,255,255,0.7); border-color: rgba(154,124,42,0.2); }
   text-decoration: none;
   transition: border-color 0.4s ease, background 0.4s ease, transform 0.3s ease;
   position: relative;
@@ -38,6 +39,7 @@ export const PostItemStyles = styled(Link)`
     letter-spacing: 0.05em;
     font-size: var(--h5);
     color: #fff;
+    body.light & { color: #1a1209; }
     margin-top: 0;
     margin-bottom: 0.75rem;
   }
@@ -74,6 +76,7 @@ export const PostItemStyles = styled(Link)`
 
   &:hover {
     color: #fff;
+    body.light &:hover { color: #1a1209; background: rgba(154,124,42,0.06); }
     border-color: rgba(191,161,69,0.45);
     background: rgba(191,161,69,0.035);
     transform: translateY(-3px);

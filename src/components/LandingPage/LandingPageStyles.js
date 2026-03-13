@@ -304,3 +304,6 @@ export const FooterNote = styled.div`
     }
   }
 `
+
+/* ── Light mode overrides ── */
+// Appended via theme patch
